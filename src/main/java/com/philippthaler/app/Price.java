@@ -1,4 +1,4 @@
-package com.philippthaler;
+package com.philippthaler.app;
 
 import java.math.BigDecimal;
 
