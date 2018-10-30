@@ -4,8 +4,6 @@ import com.philippthaler.app.Article;
 import com.philippthaler.app.Position;
 import com.philippthaler.app.exceptions.PositionTakenException;
 
-import java.util.ArrayList;
-
 public class Position2DArray {
 
   private Position[][] positions;
@@ -25,7 +23,7 @@ public class Position2DArray {
 
   public void add(Article article, int column, int row) {
     checkIndex(column, row);
-    if (positions[column][row].getArticle() != null) {
+    if (!isEmpty(column,row)) {
       throw new PositionTakenException("Position already taken: " + column + "," + row);
     }
     positions[column][row].setArticle(article);
@@ -48,6 +46,10 @@ public class Position2DArray {
   public Position get(int column, int row) {
     checkIndex(column, row);
     return positions[column][row];
+  }
+
+  public boolean isEmpty(int column, int row) {
+    return positions[column][row] == null;
   }
 
   private void checkIndex(int column, int row) {

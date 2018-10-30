@@ -2,13 +2,23 @@ package com.philippthaler.app;
 
 import java.math.BigDecimal;
 
-public class Price implements Comparable {
+public class Price implements Comparable<Price> {
 
   private BigDecimal price;
   private String symbol;
 
+  public Price(long price, String symbol) {
+    setPrice(price);
+    this.symbol = symbol;
+  }
+
+  public Price(double price, String symbol) {
+    setPrice(price);
+    this.symbol = symbol;
+  }
+
   public Price(BigDecimal price, String symbol) {
-    this.price = price;
+    setPrice(price);
     this.symbol = symbol;
   }
 
@@ -62,16 +72,11 @@ public class Price implements Comparable {
 
   @Override
   public String toString() {
-    return price.toPlainString();
+    return symbol+ " " + price.toPlainString();
   }
 
   @Override
-  public int compareTo(Object o) {
-    if (o instanceof Price) {
-      Price p = (Price) o;
-      return (price.compareTo(p.price));
-    } else {
-      return -1;
-    }
+  public int compareTo(Price price) {
+    return this.price.compareTo(price.price);
   }
 }

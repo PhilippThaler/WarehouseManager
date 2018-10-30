@@ -22,5 +22,10 @@ public class App {
 
     System.out.println(array.get(1,1));
 
+    Price a = new Price(10000, "€");
+    Price b = new Price(200, "€");
+
+    System.out.println(a.compareTo(b));
+
   }
 }
