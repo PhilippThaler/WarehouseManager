@@ -1,7 +1,5 @@
 package com.philippthaler.app;
 
-import java.math.BigDecimal;
-
 public class Article {
 
   private String name;
