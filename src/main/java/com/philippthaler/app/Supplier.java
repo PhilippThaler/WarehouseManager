@@ -1,19 +1,19 @@
 package com.philippthaler.app;
 
-public class Supplier {
+public class Supplier implements ArticleInfo {
 
-    private String name;
+  private String name;
 
-    public  Supplier(String name) {
-        this.name = name;
-    }
+  public Supplier(String name) {
+    this.name = name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    @Override
-    public String toString() {
-        return "Supplier: " + name;
-    }
+  @Override
+  public String toString() {
+    return "Supplier: " + name;
+  }
 }

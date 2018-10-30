@@ -1,19 +1,19 @@
 package com.philippthaler.app;
 
+import java.util.HashMap;
+
 public class Article {
 
   private String name;
   private String itemNumber;
   private Price price;
-  private Supplier supplier;
-  private PackagingUnit packagingUnit;
+  private HashMap<ArticleInfo, String> infos;
 
-  public Article(String name, String itemNumber, Price price, Supplier supplier, PackagingUnit packagingUnit) {
+  public Article(String name, String itemNumber, Price price, ArticleInfo... infos) {
     this.name = name;
     this.itemNumber = itemNumber;
-    this.price=price;
-    this.supplier=supplier;
-    this.packagingUnit = packagingUnit;
+    this.price = price;
+    this.infos= getInfoMapFromArray(infos);
   }
 
   public String getName() {
@@ -28,14 +28,6 @@ public class Article {
     return price;
   }
 
-  public Supplier getSupplier() {
-    return supplier;
-  }
-
-  public PackagingUnit getPackagingUnit() {
-    return packagingUnit;
-  }
-
   public void setName(String name) {
     this.name = name;
   }
@@ -48,11 +40,11 @@ public class Article {
     this.price = price;
   }
 
-  public void setSupplier(Supplier supplier) {
-    this.supplier = supplier;
-  }
-
-  public void setPackagingUnit(PackagingUnit packagingUnit) {
-    this.packagingUnit = packagingUnit;
+  private HashMap<ArticleInfo, String> getInfoMapFromArray(ArticleInfo... infos) {
+    HashMap<ArticleInfo, String> infoMap = new HashMap<>();
+    for(ArticleInfo info : infos) {
+      infoMap.put(info, info.getName());
+    }
+    return infoMap;
   }
 }

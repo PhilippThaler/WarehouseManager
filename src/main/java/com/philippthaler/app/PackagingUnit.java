@@ -1,19 +1,19 @@
 package com.philippthaler.app;
 
-public class PackagingUnit {
+public class PackagingUnit implements ArticleInfo {
 
-  private String unit;
+  private String name;
 
   public PackagingUnit(String unit) {
-    this.unit = unit;
+    this.name = unit;
   }
 
-  public String getUnit() {
-    return unit;
+  public String getName() {
+    return name;
   }
 
   @Override
   public String toString() {
-    return unit;
+    return name;
   }
 }
