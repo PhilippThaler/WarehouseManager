@@ -7,6 +7,18 @@ public class Price implements Comparable<Price> {
   private BigDecimal price;
   private String symbol;
 
+  public Price(long price) {
+    this(price, "€");
+  }
+
+  public Price(double price) {
+    this(price, "€");
+  }
+
+  public Price(BigDecimal price) {
+    this(price, "€");
+  }
+
   public Price(long price, String symbol) {
     setPrice(price);
     this.symbol = symbol;
