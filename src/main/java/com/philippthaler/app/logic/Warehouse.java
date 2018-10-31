@@ -4,6 +4,9 @@ import com.philippthaler.app.database.Database;
 import com.philippthaler.app.utils.Array2D;
 import com.philippthaler.app.utils.PositionArray2D;
 
+/**
+ * Controller class, that controls the database and die View
+ */
 public class Warehouse {
 
   private Database database;
@@ -14,5 +17,6 @@ public class Warehouse {
     warehousePositions=new PositionArray2D(columns, rows);
   }
 
-  
+
+
 }
