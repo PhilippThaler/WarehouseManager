@@ -1,5 +1,6 @@
 package com.philippthaler.app;
 
+import com.philippthaler.app.logic.*;
 import com.philippthaler.app.utils.GrowableArray2D;
 import com.philippthaler.app.utils.PositionArray2D;
 

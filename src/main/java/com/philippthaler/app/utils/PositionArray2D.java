@@ -1,6 +1,6 @@
 package com.philippthaler.app.utils;
 
-import com.philippthaler.app.Position;
+import com.philippthaler.app.logic.Position;
 import com.philippthaler.app.exceptions.PositionTakenException;
 
 /**

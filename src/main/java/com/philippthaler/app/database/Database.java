@@ -1,9 +1,9 @@
 package com.philippthaler.app.database;
 
-import com.philippthaler.app.Article;
-import com.philippthaler.app.PackagingUnit;
-import com.philippthaler.app.Price;
-import com.philippthaler.app.Supplier;
+import com.philippthaler.app.logic.Article;
+import com.philippthaler.app.logic.PackagingUnit;
+import com.philippthaler.app.logic.Price;
+import com.philippthaler.app.logic.Supplier;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.philippthaler.app;
+package com.philippthaler.app.logic;
 
 public interface ArticleInfo {
 
