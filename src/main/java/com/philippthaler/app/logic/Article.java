@@ -1,5 +1,7 @@
 package com.philippthaler.app.logic;
 
+import com.philippthaler.app.utils.Price;
+
 import java.util.HashMap;
 
 public class Article {

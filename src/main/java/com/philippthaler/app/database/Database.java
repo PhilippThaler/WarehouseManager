@@ -2,7 +2,7 @@ package com.philippthaler.app.database;
 
 import com.philippthaler.app.logic.Article;
 import com.philippthaler.app.logic.PackagingUnit;
-import com.philippthaler.app.logic.Price;
+import com.philippthaler.app.utils.Price;
 import com.philippthaler.app.logic.Supplier;
 
 import java.util.Map;
@@ -19,7 +19,7 @@ public class Database<T> {
 
   public Map<String, Article> createArticleMap() {
     Map<String, Article> articles = Map.of(
-        "Milch", new Article("Milch", "1", new Price(1, "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"))
+        "milch", new Article("Milch", "1", new Price(1, "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"))
     );
 
     return articles;
