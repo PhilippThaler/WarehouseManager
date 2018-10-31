@@ -1,16 +1,13 @@
 package com.philippthaler.app;
 
-import com.philippthaler.app.utils.Position2DArray;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.philippthaler.app.utils.Array2D;
+import com.philippthaler.app.utils.PositionArray2D;
 
 public class Warehouse {
 
-    private Position2DArray articleArray;
+  private Array2D<Position> warehousePositions;
 
-    public Warehouse(int columns, int rows) {
-      articleArray = new Position2DArray(columns, rows);
-    }
-
+  public Warehouse(int columns, int rows) {
+    warehousePositions=new PositionArray2D(columns, rows);
+  }
 }

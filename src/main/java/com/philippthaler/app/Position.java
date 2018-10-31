@@ -2,59 +2,69 @@ package com.philippthaler.app;
 
 import java.util.InputMismatchException;
 
-public class Position {
+public class Position<T> {
 
-    private Article article;
-    private int numOfArticles;
+  private T obj;
+  private int numOfObjects;
 
-    public Position() {
-        article = null;
-        numOfArticles = 0;
+  public Position() {
+    obj = null;
+    numOfObjects = 0;
+  }
+
+  public Position(T obj) {
+    this.obj = obj;
+    numOfObjects = 0;
+  }
+
+  public Position(T obj, int numOfObjects) {
+    if (numOfObjects < 0) {
+      throw new InputMismatchException("The number can't be negative!");
     }
+    this.obj = obj;
+    this.numOfObjects = numOfObjects;
+  }
 
-    public Position(Article article) {
-        this.article = article;
-        numOfArticles = 0;
-    }
+  public T getObject() {
+    return obj;
+  }
 
-    public Position(Article article, int numOfArticles) {
-        if (numOfArticles < 0) {
-            throw new InputMismatchException("The number can't be negative!");
-        }
-        this.article = article;
-        this.numOfArticles = numOfArticles;
-    }
+  public int getNumOfObjects() {
+    return numOfObjects;
+  }
 
-    public Article getArticle() {
-        return article;
-    }
+  public void setObject(T obj) {
+    this.obj = obj;
+  }
 
-    public int getNumOfArticles() {
-        return numOfArticles;
-    }
+  public void setNumOfObjects(int numOfObjects) {
+    this.numOfObjects = numOfObjects;
+  }
 
-    public void setArticle(Article article) {
-        this.article = article;
-    }
+  public void addNumOfObjects(int amount) {
+    numOfObjects += amount;
+  }
 
-    public void setNumOfArticles(int numOfArticles) {
-        this.numOfArticles = numOfArticles;
+  public void subtractNumOfObjects(int amount) {
+    if ((numOfObjects - amount) < 0) {
+      numOfObjects = 0;
     }
+    numOfObjects -= amount;
+  }
 
-    public void addNumOfArticles(int amount) {
-        numOfArticles += amount;
-    }
+  public boolean isEmpty() {
+    return obj == null;
+  }
 
-    public void subtractNumOfArticles(int amount) {
-        if((numOfArticles-amount) < 0) {
-            numOfArticles = 0;
-        }
-        numOfArticles -= amount;
-    }
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Position && ((Position) obj).obj.equals(this.obj) && ((Position) obj).numOfObjects == numOfObjects;
 
-    @Override
-    public String toString() {
-        return "Article: " + article.getName() + ": " + numOfArticles;
-    }
+  }
+
+  @Override
+  public String toString() {
+    return "Article: " + obj + ", Number: " + numOfObjects;
+  }
 }
 

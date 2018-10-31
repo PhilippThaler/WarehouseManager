@@ -1,6 +1,6 @@
 package com.philippthaler.app;
 
-public class PackagingUnit implements ArticleInfo {
+public class PackagingUnit implements ArticleInfo, Comparable<PackagingUnit> {
 
   private String name;
 
@@ -15,5 +15,11 @@ public class PackagingUnit implements ArticleInfo {
   @Override
   public String toString() {
     return name;
+  }
+
+
+  @Override
+  public int compareTo(PackagingUnit packagingUnit) {
+    return name.compareTo(packagingUnit.name);
   }
 }

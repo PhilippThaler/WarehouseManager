@@ -13,7 +13,7 @@ public class Article {
     this.name = name;
     this.itemNumber = itemNumber;
     this.price = price;
-    this.infos= getInfoMapFromArray(infos);
+    this.infos = getInfoMapFromArray(infos);
   }
 
   public String getName() {
@@ -42,9 +42,19 @@ public class Article {
 
   private HashMap<ArticleInfo, String> getInfoMapFromArray(ArticleInfo... infos) {
     HashMap<ArticleInfo, String> infoMap = new HashMap<>();
-    for(ArticleInfo info : infos) {
+    for (ArticleInfo info : infos) {
       infoMap.put(info, info.getName());
     }
     return infoMap;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Article && ((Article) obj).name==name && ((Article) obj).itemNumber.equals(itemNumber)&&((Article) obj).price.equals(price) && ((Article) obj).price.equals(price);
+  }
+
+  @Override
+  public String toString() {
+    return "Article: " + name;
   }
 }

@@ -76,6 +76,11 @@ public class Price implements Comparable<Price> {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Price && ((Price) obj).compareTo(this) == 0;
+  }
+
+  @Override
   public int compareTo(Price price) {
     return this.price.compareTo(price.price);
   }

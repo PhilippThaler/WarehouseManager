@@ -1,6 +1,7 @@
 package com.philippthaler.app;
 
-import com.philippthaler.app.utils.Position2DArray;
+import com.philippthaler.app.utils.GrowableArray2D;
+import com.philippthaler.app.utils.PositionArray2D;
 
 import java.math.BigDecimal;
 
@@ -9,23 +10,25 @@ import java.math.BigDecimal;
  */
 public class App {
   public static void main(String[] args) {
-    Position2DArray array = new Position2DArray(10, 10);
-    Article milch = new Article("Milch", "1", new Price(new BigDecimal(100), "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"));
+    GrowableArray2D array = new PositionArray2D(1, 1);
+    Article milch = new Article("Milch", "1", new Price(new BigDecimal(125), "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"));
     Article penis = new Article("penis", "1", new Price(new BigDecimal(100), "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"));
+    Article tempo = new Article("Tempo", "1", new Price(new BigDecimal(321), "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"));
 
-    array.add(milch, 1, 1);
-    array.setNumberOfArticles(10,1,1);
+    Position<Article> milchP = new Position<>(milch);
+    Position penisP=new Position(penis);
+    array.add(milchP);
 
-    System.out.println(array.get(1,1));
+    array.add(new Position<Article>(penis));
+    array.add(new Position<Article>(tempo));
 
-    array.setPosition(penis, 1,1);
+    System.out.println(array);
+    array.setRows(array.getRows()+1);
+    System.out.println(array);
+    System.out.println(array.contains(milchP));
+    System.out.println(array.contains(penisP));
+    array.remove(0,0);
 
-    System.out.println(array.get(1,1));
-
-    Price a = new Price(10000, "€");
-    Price b = new Price(200, "€");
-
-    System.out.println(a.compareTo(b));
-
+    System.out.println(array);
   }
 }

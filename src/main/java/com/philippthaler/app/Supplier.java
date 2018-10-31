@@ -1,6 +1,6 @@
 package com.philippthaler.app;
 
-public class Supplier implements ArticleInfo {
+public class Supplier implements ArticleInfo, Comparable<Supplier> {
 
   private String name;
 
@@ -10,6 +10,16 @@ public class Supplier implements ArticleInfo {
 
   public String getName() {
     return name;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof Supplier && ((Supplier) obj).name.equals(name);
+  }
+
+  @Override
+  public int compareTo(Supplier supplier) {
+    return name.compareTo(supplier.name);
   }
 
   @Override
