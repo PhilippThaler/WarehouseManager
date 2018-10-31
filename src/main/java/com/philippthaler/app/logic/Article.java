@@ -11,6 +11,7 @@ public class Article {
   private Price price;
   private HashMap<ArticleInfo, String> infos;
 
+
   public Article(String name, String itemNumber, Price price, ArticleInfo... infos) {
     this.name = name;
     this.itemNumber = itemNumber;
@@ -49,6 +50,7 @@ public class Article {
     }
     return infoMap;
   }
+
 
   @Override
   public boolean equals(Object obj) {
