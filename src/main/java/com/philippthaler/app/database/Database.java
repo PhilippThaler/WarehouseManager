@@ -19,7 +19,9 @@ public class Database<T> {
 
   public Map<String, Article> createArticleMap() {
     Map<String, Article> articles = Map.of(
-        "milch", new Article("Milch", "1", new Price(1, "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak"))
+        "milch", new Article("Milch", "1", new Price(1, "€"), new Supplier("Grissemann"), new PackagingUnit("Tetrapak")),
+        "mehl", new Article("Mehl", "2", new Price(2, "€"), suppliers.get("grissemann"),packagingUnits.get("sack")),
+        "cola", new Article("Cola", "3", new Price(3,"€"), suppliers.get("wedl"), packagingUnits.get("palette"))
     );
 
     return articles;
@@ -45,4 +47,6 @@ public class Database<T> {
 
     return suppliers;
   }
+
+
 }
