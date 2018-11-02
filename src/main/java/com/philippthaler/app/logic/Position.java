@@ -1,28 +1,21 @@
 package com.philippthaler.app.logic;
 
-import java.util.InputMismatchException;
-
 public class Position<T> {
 
   private T obj;
   private int numOfObjects;
+  private int column;
+  private int row;
 
   public Position() {
+    this(-1, -1);
+  }
+
+  public Position(int column, int row) {
     obj = null;
     numOfObjects = 0;
-  }
-
-  public Position(T obj) {
-    this.obj = obj;
-    numOfObjects = 0;
-  }
-
-  public Position(T obj, int numOfObjects) {
-    if (numOfObjects < 0) {
-      throw new InputMismatchException("The number can't be negative!");
-    }
-    this.obj = obj;
-    this.numOfObjects = numOfObjects;
+    this.column = column;
+    this.row = row;
   }
 
   public T getObject() {

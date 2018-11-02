@@ -9,21 +9,21 @@ import com.philippthaler.app.logic.Supplier;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Database {
+public class ArticleDatabase {
 
   private HashMap<String, PackagingUnit> packagingUnits;
   private HashMap<String, Supplier> suppliers;
   private HashMap<String, Article> articles;
 
-  private static final Database instance = new Database();
+  private static final ArticleDatabase instance = new ArticleDatabase();
 
-  private Database() {
+  private ArticleDatabase() {
     packagingUnits = createPackagingUnitMap();
     suppliers = createSupplierMap();
     articles = createArticleMap();
   }
 
-  public static Database getInstance() {
+  public static ArticleDatabase getInstance() {
     return instance;
   }
 
@@ -73,6 +73,15 @@ public class Database {
 
   public Supplier getSupplier(String key) {
     return suppliers.get(key.toLowerCase());
+  }
+
+  public ArticleInfo getArticleInfo(String key) {
+    if(suppliers.get(key.toLowerCase()) != null) {
+      return suppliers.get(key.toLowerCase());
+    } else if(packagingUnits.get(key.toLowerCase()) != null) {
+      return packagingUnits.get(key.toLowerCase());
+    }
+    return null;
   }
 
   public void putArticleInfo(String key, ArticleInfo info) {
