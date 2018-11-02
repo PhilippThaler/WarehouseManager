@@ -5,4 +5,6 @@ public interface View {
   void input();
   void showHelp();
   void showAll();
+  void config();
+  void add();
 }

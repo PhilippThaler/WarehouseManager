@@ -19,6 +19,10 @@ public class Price implements Comparable<Price> {
     this(price, "€");
   }
 
+  public Price(String price) {
+    this(price, "€");
+  }
+
   public Price(long price, String symbol) {
     setPrice(price);
     this.symbol = symbol;
@@ -32,6 +36,10 @@ public class Price implements Comparable<Price> {
   public Price(BigDecimal price, String symbol) {
     setPrice(price);
     this.symbol = symbol;
+  }
+
+  public Price(String price, String symbol) {
+    this(new BigDecimal(price), symbol);
   }
 
   public void setPrice(long price) {
@@ -84,7 +92,7 @@ public class Price implements Comparable<Price> {
 
   @Override
   public String toString() {
-    return symbol+ " " + price.toPlainString();
+    return symbol + " " + price.toPlainString();
   }
 
   @Override

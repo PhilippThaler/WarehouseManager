@@ -18,6 +18,7 @@ public interface Array2D<T> {
   int getRows();
   void clear();
   boolean isFull();
-  Object[] toArray();
+  T[] getArrayOfNonEmptyPositions();
+  T[][] toArray();
 
 }

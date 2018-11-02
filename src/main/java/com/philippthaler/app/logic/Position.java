@@ -7,8 +7,9 @@ public class Position<T> {
   private int column;
   private int row;
 
-  public Position() {
-    this(-1, -1);
+  public Position(T obj) {
+    this.obj = obj;
+    numOfObjects = 0;
   }
 
   public Position(int column, int row) {
@@ -57,7 +58,7 @@ public class Position<T> {
 
   @Override
   public String toString() {
-    return "Article: " + obj + ", Number: " + numOfObjects;
+    return "Article: " + obj + ", Number: " + numOfObjects + "\nColumn: " + column + ", Row: " + row;
   }
 }
 

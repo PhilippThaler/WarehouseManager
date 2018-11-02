@@ -6,11 +6,10 @@ import com.philippthaler.app.exceptions.PositionTakenException;
 /**
  * Class that implements the Array2D interface to hold a 2D array of Positions
  */
-public class PositionArray2D implements GrowableArray2D<Position> {
+public class Position2DDatabase implements GrowableArray2D<Position> {
 
   private Position[][] positions;
-  private int columns;
-  private int rows;
+  private Database2DConfig size;
 
   /**
    * Constructor that specifies the size of the array.
@@ -18,9 +17,8 @@ public class PositionArray2D implements GrowableArray2D<Position> {
    * @param columns How many columns the array should have.
    * @param rows    How many rows the array should have.
    */
-  public PositionArray2D(int columns, int rows) {
-    this.columns = columns;
-    this.rows = rows;
+  public Position2DDatabase(int columns, int rows) {
+    size = new Database2DConfig(columns, rows);
     positions = new Position[columns][rows];
     initArray();
   }
@@ -34,10 +32,10 @@ public class PositionArray2D implements GrowableArray2D<Position> {
   @Override
   public void add(Position position) {
     if (isFull()) {
-      setColumns(columns + 1);
+      setColumns(size.getColumns() + 1);
     }
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
         if (isIndexEmpty(i, j)) {
           positions[i][j] = position;
           return;
@@ -63,7 +61,7 @@ public class PositionArray2D implements GrowableArray2D<Position> {
 
   @Override
   public void remove(int column, int row) {
-    positions[column][row] = new Position();
+    positions[column][row] = new Position(column,row);
   }
 
   @Override
@@ -80,8 +78,8 @@ public class PositionArray2D implements GrowableArray2D<Position> {
   @Override
   public boolean contains(Object o) {
     if (o instanceof Position) {
-      for (int i = 0; i < columns; i++) {
-        for (int j = 0; j < rows; j++) {
+      for (int i = 0; i < size.getColumns(); i++) {
+        for (int j = 0; j < size.getRows(); j++) {
           if (positions[i][j].equals(o)) {
             return true;
           }
@@ -93,32 +91,32 @@ public class PositionArray2D implements GrowableArray2D<Position> {
 
   @Override
   public int getColumns() {
-    return columns;
+    return size.getColumns();
   }
 
   @Override
   public int getRows() {
-    return rows;
+    return size.getRows();
   }
 
   @Override
   public void clear() {
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
-        positions[i][j] = new Position();
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
+        positions[i][j] = new Position(i,j);
       }
     }
   }
 
   @Override
-  public Object[] toArray() {
+  public Position[][] toArray() {
     return positions;
   }
 
   @Override
   public boolean isFull() {
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
         if (isIndexEmpty(i, j)) {
           return false;
         }
@@ -128,29 +126,56 @@ public class PositionArray2D implements GrowableArray2D<Position> {
   }
 
   @Override
+  public Position[] getArrayOfNonEmptyPositions() {
+    Position[] nonEmpty = new Position[getNumberOfNonEmptyPositions()];
+    int count = 0;
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
+        if (!positions[i][j].isEmpty()) {
+          nonEmpty[count] = positions[i][j];
+          count++;
+        }
+      }
+    }
+    return nonEmpty;
+  }
+
+  public int getNumberOfNonEmptyPositions() {
+    int count = 0;
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
+        if (!positions[i][j].isEmpty()) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  @Override
   public void setColumns(int columns) {
-    setSize(columns, this.rows);
+    setSize(columns, size.getRows());
   }
 
   @Override
   public void setRows(int rows) {
-    setSize(this.columns, rows);
+    setSize(size.getColumns(), rows);
   }
 
   @Override
   public void setSize(int columns, int rows) {
-    if (columns == this.columns && rows == this.rows) {
+    if (columns == size.getColumns() && rows == size.getRows()) {
       return;
     }
     Position[][] temp = new Position[columns][rows];
 
-    if (columns > this.columns || rows > this.rows) {
-      for (int i = 0; i < this.columns; i++) {
-        for (int j = 0; j < this.rows; j++) {
+    if (columns > size.getColumns() || rows > size.getRows()) {
+      for (int i = 0; i < size.getColumns(); i++) {
+        for (int j = 0; j < size.getRows(); j++) {
           temp[i][j] = positions[i][j];
         }
       }
-    } else if (columns < this.columns || rows < this.rows) {
+    } else if (columns < size.getColumns() || rows < size.getRows()) {
       for (int i = 0; i < columns; i++) {
         for (int j = 0; j < rows; j++) {
           temp[i][j] = positions[i][j];
@@ -159,17 +184,22 @@ public class PositionArray2D implements GrowableArray2D<Position> {
     }
 
 
-    this.columns = columns;
-    this.rows = rows;
+    size.setColumns(columns);
+    size.setRows(rows);
     positions = temp;
     initArray();
   }
 
+  @Override
+  public void setSize(Database2DConfig config) {
+    setSize(config.getColumns(), config.getRows());
+  }
+
   private void initArray() {
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
         if (positions[i][j] == null) {
-          positions[i][j] = new Position();
+          positions[i][j] = new Position(i,j);
         }
       }
     }
@@ -177,7 +207,7 @@ public class PositionArray2D implements GrowableArray2D<Position> {
 
   // Checks if the index is in range
   private void checkIndex(int column, int row) {
-    if (column < 0 || column > columns || row < 0 || row > rows) {
+    if (column < 0 || column > size.getColumns() || row < 0 || row > size.getRows()) {
       throw new ArrayIndexOutOfBoundsException();
     }
   }
@@ -185,8 +215,8 @@ public class PositionArray2D implements GrowableArray2D<Position> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
+    for (int i = 0; i < size.getColumns(); i++) {
+      for (int j = 0; j < size.getRows(); j++) {
         sb.append(positions[i][j].isEmpty() ? "_" : "*");
       }
       sb.append("\n");

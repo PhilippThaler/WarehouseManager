@@ -2,8 +2,6 @@ package com.philippthaler.app.ui;
 
 import com.philippthaler.app.ui.commands.View;
 
-import java.util.Scanner;
-
 public class UserInterface implements View {
 
   public UserInterface() {
@@ -12,12 +10,13 @@ public class UserInterface implements View {
 
   @Override
   public void start() {
-    System.out.println("------------------------");
-    System.out.println("Lagerverwaltungssoftware");
-    System.out.println("------------------------");
+    System.out.println("\n\nWhat would you like to do?");
+    showHelp();
+  }
 
-    System.out.println("\n\nWas wollen Sie tun?");
-
+  public void add() {
+    System.out.println("Enter the Article Information, seperated by whitespace");
+    System.out.println("[Name] [Price] [Supplier] [Packaging Unit]");
   }
 
   @Override
@@ -32,6 +31,11 @@ public class UserInterface implements View {
 
   public void showAll() {
     System.out.println("Show All");
+  }
+
+  public void config() {
+    System.out.println("Enter the number of rows and columns you'd like, seperated by whitespace");
+
   }
 
 

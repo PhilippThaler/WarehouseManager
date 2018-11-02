@@ -59,6 +59,8 @@ public class Article {
 
   @Override
   public String toString() {
-    return "Article: " + name;
+    StringBuilder sb = new StringBuilder();
+    sb.append("Article: " + name + ", Itemnumber: " + itemNumber + ", Price: " + price.getPrice());
+    return sb.toString();
   }
 }
