@@ -1,5 +1,7 @@
 package com.philippthaler.app.ui;
 
+import com.philippthaler.app.database.ViewCommandDatabase;
+import com.philippthaler.app.ui.commands.Command;
 import com.philippthaler.app.ui.commands.View;
 
 public class UserInterface implements View {
@@ -26,7 +28,9 @@ public class UserInterface implements View {
 
   @Override
   public void showHelp() {
-    System.out.println("Help");
+    for(String command: ViewCommandDatabase.getListOfCommands()) {
+      System.out.print(" ["+command+"] ");
+    }
   }
 
   public void showAll() {

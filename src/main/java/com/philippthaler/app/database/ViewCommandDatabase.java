@@ -4,11 +4,10 @@ import com.philippthaler.app.ui.UserInterface;
 import com.philippthaler.app.ui.commands.Command;
 import com.philippthaler.app.ui.commands.View;
 
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 public class ViewCommandDatabase {
-  HashMap<String, Command> commands;
+  private static HashMap<String, Command> commands;
 
   public ViewCommandDatabase() {
     commands = initDatabase();
@@ -34,8 +33,9 @@ public class ViewCommandDatabase {
     commands.get(command).run(ui);
   }
 
-  public Object[] getListOfCommands() {
-    Set commandStrings = commands.keySet();
-    return commandStrings.toArray();
+  public static String[] getListOfCommands() {
+    String[] commandStrings = commands.keySet().toArray(new String[0]);
+
+    return commandStrings;
   }
 }

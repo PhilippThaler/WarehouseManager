@@ -32,9 +32,9 @@ public class Warehouse {
     System.out.println("------------------------");
     System.out.println("Warehouse Managing");
     System.out.println("------------------------");
-    userInterface.start();
     Scanner scanner = new Scanner(System.in);
     while (running) {
+      userInterface.start();
       switch (scanner.next().toLowerCase()) {
         case "add":
           viewCommands.runCommand("add", userInterface);
@@ -59,7 +59,7 @@ public class Warehouse {
     }
   }
 
-  public void showAll() {
+  private void showAll() {
     Position[] nonEmpty = warehousePositions.getArrayOfNonEmptyPositions();
 
     for (Position p : nonEmpty) {
@@ -67,7 +67,7 @@ public class Warehouse {
     }
   }
 
-  public void addArticle() {
+  private void addArticle() {
     Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
     Price price = new Price(scanner.next());
@@ -78,7 +78,7 @@ public class Warehouse {
     warehousePositions.add(new Position(article));
   }
 
-  public void getPosition() {
+  private void getPosition() {
 
   }
 }
