@@ -18,9 +18,10 @@ public class ViewCommandDatabase {
     HashMap<String, Command> temp = new HashMap<>();
     temp.put("help", View::showHelp);
     temp.put("start", View::start);
-    temp.put("showall", View::showAll);
+    temp.put("inventory", View::showAll);
     temp.put("config", View::config);
     temp.put("add", View::add);
+    temp.put("position", View::showPositions);
 
     return temp;
   }

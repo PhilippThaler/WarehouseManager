@@ -3,6 +3,7 @@ package com.philippthaler.app.logic;
 import com.philippthaler.app.database.ArticleDatabase;
 import com.philippthaler.app.database.ViewCommandDatabase;
 import com.philippthaler.app.ui.UserInterface;
+import com.philippthaler.app.utils.Database2DConfig;
 import com.philippthaler.app.utils.GrowableArray2D;
 import com.philippthaler.app.utils.Position2DDatabase;
 import com.philippthaler.app.utils.Price;
@@ -35,13 +36,14 @@ public class Warehouse {
     Scanner scanner = new Scanner(System.in);
     while (running) {
       userInterface.start();
-      switch (scanner.next().toLowerCase()) {
+      String command = scanner.next().toLowerCase();
+      switch (command) {
         case "add":
-          viewCommands.runCommand("add", userInterface);
+          viewCommands.runCommand(command, userInterface);
           addArticle();
           break;
-        case "showall":
-          viewCommands.runCommand("showall", userInterface);
+        case "inventory":
+          viewCommands.runCommand(command, userInterface);
           showAll();
           break;
         case "q":
@@ -49,11 +51,12 @@ public class Warehouse {
           running = false;
           break;
         case "position":
+          viewCommands.runCommand(command, userInterface);
           getPosition();
           break;
         case "help":
         default:
-          viewCommands.runCommand("help", userInterface);
+          viewCommands.runCommand(command, userInterface);
           break;
       }
     }
@@ -73,12 +76,28 @@ public class Warehouse {
     Price price = new Price(scanner.next());
     Supplier supplier = new Supplier(scanner.next());
     PackagingUnit packagingUnit = new PackagingUnit(scanner.next());
-    Article article = new Article(name, "2", price, supplier, packagingUnit);
+    Article article = new ArticleNormal(name, "2", price, supplier, packagingUnit);
 
-    warehousePositions.add(new Position(article));
+    Position newPosition = new Position(article, warehousePositions.getNextFreePosition());
+    warehousePositions.add(newPosition);
+
+    System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
+  }
+
+  private void removeArticle() {
+    Scanner scanner = new Scanner(System.in);
+    String name = scanner.next();
+
+    // TODO
   }
 
   private void getPosition() {
+    Scanner scanner = new Scanner(System.in);
+    String name = scanner.next();
 
+    System.out.println("Positions for Article " + name + ":");
+    for(Database2DConfig config : warehousePositions.getPositions(name)) {
+      System.out.println(config);
+    }
   }
 }

@@ -7,4 +7,5 @@ public interface View {
   void showAll();
   void config();
   void add();
+  void showPositions();
 }

@@ -1,7 +1,7 @@
 package com.philippthaler.app.database;
 
-import com.philippthaler.app.logic.Article;
 import com.philippthaler.app.logic.ArticleInfo;
+import com.philippthaler.app.logic.ArticleNormal;
 import com.philippthaler.app.logic.PackagingUnit;
 import com.philippthaler.app.utils.Price;
 import com.philippthaler.app.logic.Supplier;
@@ -13,7 +13,7 @@ public class ArticleDatabase {
 
   private HashMap<String, PackagingUnit> packagingUnits;
   private HashMap<String, Supplier> suppliers;
-  private HashMap<String, Article> articles;
+  private HashMap<String, ArticleNormal> articles;
 
   private static final ArticleDatabase instance = new ArticleDatabase();
 
@@ -27,14 +27,14 @@ public class ArticleDatabase {
     return instance;
   }
 
-  public HashMap<String, Article> createArticleMap() {
-    Map<String, Article> temp = Map.of(
-        "milch", new Article("Milch", "1", new Price(1), suppliers.get("grissemann"), packagingUnits.get("tetrapak")),
-        "mehl", new Article("Mehl", "2", new Price(2), suppliers.get("grissemann"), packagingUnits.get("sack")),
-        "cola", new Article("Cola", "3", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
-        "rindfleisch", new Article("Rindfleisch", "5", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
+  public HashMap<String, ArticleNormal> createArticleMap() {
+    Map<String, ArticleNormal> temp = Map.of(
+        "milch", new ArticleNormal("Milch", "1", new Price(1), suppliers.get("grissemann"), packagingUnits.get("tetrapak")),
+        "mehl", new ArticleNormal("Mehl", "2", new Price(2), suppliers.get("grissemann"), packagingUnits.get("sack")),
+        "cola", new ArticleNormal("Cola", "3", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
+        "rindfleisch", new ArticleNormal("Rindfleisch", "5", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
     );
-    HashMap<String, Article> map = new HashMap<>();
+    HashMap<String, ArticleNormal> map = new HashMap<>();
     map.putAll(temp);
     return map;
   }
@@ -63,7 +63,7 @@ public class ArticleDatabase {
     return map;
   }
 
-  public Article getArticle(String key) {
+  public ArticleNormal getArticle(String key) {
     return articles.get(key.toLowerCase());
   }
 
@@ -92,7 +92,7 @@ public class ArticleDatabase {
     }
   }
 
-  public void putArticle(String key, Article article) {
+  public void putArticle(String key, ArticleNormal article) {
     articles.put(key.toLowerCase(), article);
   }
 

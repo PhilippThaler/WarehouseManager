@@ -1,27 +1,32 @@
 package com.philippthaler.app.utils;
 
 public class Database2DConfig {
-  private int columns;
-  private int rows;
+  private int column;
+  private int row;
 
-  public Database2DConfig(int columns, int rows) {
-    this.columns = columns;
-    this.rows = rows;
+  public Database2DConfig(int column, int row) {
+    this.column = column;
+    this.row = row;
   }
 
-  public int getColumns() {
-    return columns;
+  public int getColumn() {
+    return column;
   }
 
-  public int getRows() {
-    return rows;
+  public int getRow() {
+    return row;
   }
 
-  public void setColumns(int columns) {
-    this.columns = columns;
+  public void setColumn(int column) {
+    this.column = column;
   }
 
-  public void setRows(int rows) {
-    this.rows = rows;
+  public void setRow(int row) {
+    this.row = row;
+  }
+
+  @Override
+  public String toString() {
+    return "Column: " + column + "Row: " + row;
   }
 }

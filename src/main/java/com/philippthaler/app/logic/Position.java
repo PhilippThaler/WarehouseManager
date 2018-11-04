@@ -1,64 +1,75 @@
 package com.philippthaler.app.logic;
 
-public class Position<T> {
+import com.philippthaler.app.utils.Database2DConfig;
 
-  private T obj;
-  private int numOfObjects;
-  private int column;
-  private int row;
+public class Position {
 
-  public Position(T obj) {
-    this.obj = obj;
-    numOfObjects = 0;
-  }
+  private Article article;
+  private int numOfArticles;
+  private Database2DConfig arrayPosition;
 
   public Position(int column, int row) {
-    obj = null;
-    numOfObjects = 0;
-    this.column = column;
-    this.row = row;
+    this(null, column, row);
   }
 
-  public T getObject() {
-    return obj;
+  public Position(Database2DConfig config) {
+    this(null, config.getColumn(), config.getRow());
   }
 
-  public int getNumOfObjects() {
-    return numOfObjects;
+  public Position(Article article, int column, int row) {
+    this(article, new Database2DConfig(column, row));
   }
 
-  public void setObject(T obj) {
-    this.obj = obj;
+  public Position(Article article, Database2DConfig config) {
+    article = article;
+    numOfArticles = 0;
+    arrayPosition = config;
   }
 
-  public void setNumOfObjects(int numOfObjects) {
-    this.numOfObjects = numOfObjects;
+  public Article getArticle() {
+    return article;
   }
 
-  public void addNumOfObjects(int amount) {
-    numOfObjects += amount;
+  public Database2DConfig getArrayPosition() {
+    return arrayPosition;
   }
 
-  public void subtractNumOfObjects(int amount) {
-    if ((numOfObjects - amount) < 0) {
-      numOfObjects = 0;
+  public int getNumOfArticles() {
+    return numOfArticles;
+  }
+
+  public void setArticle(Article article) {
+    this.article = article;
+  }
+
+  public void setNumOfArticles(int numOfArticles) {
+    this.numOfArticles = numOfArticles;
+  }
+
+  public void addNumOfArticles(int amount) {
+    numOfArticles += amount;
+  }
+
+  public void subtractNumOfArticles(int amount) {
+    if ((numOfArticles - amount) < 0) {
+      numOfArticles = 0;
     }
-    numOfObjects -= amount;
+    numOfArticles -= amount;
   }
 
   public boolean isEmpty() {
-    return obj == null;
+    return article == null;
   }
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof Position && ((Position) obj).obj.equals(this.obj) && ((Position) obj).numOfObjects == numOfObjects;
+    return obj instanceof Position && ((Position) obj).article.equals(this.article) && ((Position) obj).numOfArticles == numOfArticles;
 
   }
 
   @Override
   public String toString() {
-    return "Article: " + obj + ", Number: " + numOfObjects + "\nColumn: " + column + ", Row: " + row;
+    return "Article: " + article + ", Number: " + numOfArticles + arrayPosition;
   }
 }
 
