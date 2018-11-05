@@ -29,10 +29,10 @@ public class ArticleDatabase {
 
   public HashMap<String, ArticleNormal> createArticleMap() {
     Map<String, ArticleNormal> temp = Map.of(
-        "milch", new ArticleNormal("Milch", "1", new Price(1), suppliers.get("grissemann"), packagingUnits.get("tetrapak")),
-        "mehl", new ArticleNormal("Mehl", "2", new Price(2), suppliers.get("grissemann"), packagingUnits.get("sack")),
-        "cola", new ArticleNormal("Cola", "3", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
-        "rindfleisch", new ArticleNormal("Rindfleisch", "5", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
+        "milch", new ArticleNormal("Milch", new Price(1), suppliers.get("grissemann"), packagingUnits.get("tetrapak")),
+        "mehl", new ArticleNormal("Mehl", new Price(2), suppliers.get("grissemann"), packagingUnits.get("sack")),
+        "cola", new ArticleNormal("Cola", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
+        "rindfleisch", new ArticleNormal("Rindfleisch", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
     );
     HashMap<String, ArticleNormal> map = new HashMap<>();
     map.putAll(temp);
@@ -76,9 +76,9 @@ public class ArticleDatabase {
   }
 
   public ArticleInfo getArticleInfo(String key) {
-    if(suppliers.get(key.toLowerCase()) != null) {
+    if (suppliers.get(key.toLowerCase()) != null) {
       return suppliers.get(key.toLowerCase());
-    } else if(packagingUnits.get(key.toLowerCase()) != null) {
+    } else if (packagingUnits.get(key.toLowerCase()) != null) {
       return packagingUnits.get(key.toLowerCase());
     }
     return null;

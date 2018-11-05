@@ -65,7 +65,7 @@ public class Warehouse {
   }
 
   private void initWarehouse() {
-    for(String key : articleDatabase.createArticleMap().keySet()) {
+    for (String key : articleDatabase.createArticleMap().keySet()) {
       addArticle(articleDatabase.getArticle(key));
     }
   }
@@ -84,7 +84,7 @@ public class Warehouse {
     Price price = new Price(scanner.next());
     Supplier supplier = new Supplier(scanner.next());
     PackagingUnit packagingUnit = new PackagingUnit(scanner.next());
-    Article article = new ArticleNormal(name, "2", price, supplier, packagingUnit);
+    Article article = new ArticleNormal(name, price, supplier, packagingUnit);
 
     addArticle(article);
   }
@@ -107,7 +107,7 @@ public class Warehouse {
     String name = scanner.next();
 
     System.out.println("Positions for Article " + name + ":");
-    for(Database2DConfig config : warehousePositions.getPositions(name)) {
+    for (Database2DConfig config : warehousePositions.getPositions(name)) {
       System.out.println(config);
     }
   }

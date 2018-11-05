@@ -12,9 +12,9 @@ public class ArticleNormal implements Article {
   private HashMap<ArticleInfo, String> infos;
 
 
-  public ArticleNormal(String name, String itemNumber, Price price, ArticleInfo... infos) {
+  public ArticleNormal(String name, Price price, ArticleInfo... infos) {
     this.name = name;
-    this.itemNumber = itemNumber;
+    this.itemNumber = generateItemNumber(name);
     this.price = price;
     this.infos = getInfoMapFromArray(infos);
   }
@@ -49,6 +49,13 @@ public class ArticleNormal implements Article {
       infoMap.put(info, info.getName());
     }
     return infoMap;
+  }
+
+  private String generateItemNumber(String articleName) {
+    StringBuilder itemNumber = new StringBuilder();
+    articleName.toLowerCase().chars().forEach(itemNumber::append);
+
+    return itemNumber.toString();
   }
 
 

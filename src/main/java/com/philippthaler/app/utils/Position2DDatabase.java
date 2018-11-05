@@ -214,7 +214,6 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
       }
     }
 
-
     size.setColumn(columns);
     size.setRow(rows);
     positions = temp;
