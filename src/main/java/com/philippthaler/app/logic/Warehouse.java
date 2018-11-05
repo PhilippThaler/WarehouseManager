@@ -47,7 +47,10 @@ public class Warehouse {
           viewCommands.runCommand(command, userInterface);
           showAll();
           break;
-          
+        case "config":
+          viewCommands.runCommand(command, userInterface);
+          configWarehouse();
+          break;
         case "q":
         case "quit":
         case "exit":
@@ -84,17 +87,28 @@ public class Warehouse {
     }
   }
 
-  private void addArticle() {
+  private void configWarehouse() {
     Scanner scanner = new Scanner(System.in);
-    String input = scanner.nextLine();
-    String[] params = input.split(" ");
 
     try {
-      String name = params[0];
-      Price price = new Price(params[1]);
-      Supplier supplier = new Supplier(params[2]);
-      PackagingUnit packagingUnit = new PackagingUnit(params[3]);
-      int numOfArticles = Integer.valueOf(params[4]);
+      int columns = Integer.valueOf(scanner.next());
+      int rows = Integer.valueOf(scanner.next());
+      warehousePositions.setSize(columns, rows);
+    } catch (NumberFormatException e) {
+      System.out.println("Wrong kind of arguments. Integers expected");
+    }
+  }
+
+  private void addArticle() {
+    Scanner scanner = new Scanner(System.in);
+    String[] args = scanner.nextLine().split(" ");
+
+    try {
+      String name = args[0];
+      Price price = new Price(args[1]);
+      Supplier supplier = new Supplier(args[2]);
+      PackagingUnit packagingUnit = new PackagingUnit(args[3]);
+      int numOfArticles = Integer.valueOf(args[4]);
       Article article = new ArticleNormal(name, price, supplier, packagingUnit);
 
       addArticle(article, numOfArticles);
@@ -109,12 +123,14 @@ public class Warehouse {
     Position newPosition = new Position(article, warehousePositions.getNextFreePosition());
     newPosition.addNumOfArticles(numOfArticles);
     warehousePositions.add(newPosition);
+    addArticleToDb(article);
     System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
   }
 
   private void addArticleToDb(Article article) {
-    if (isArticleInDb(article)) {
+    if (!isArticleInDb(article)) {
       articleDatabase.putArticle(article.getName().toLowerCase(), (ArticleNormal) article);
+      System.out.println(article.getName() + " added to the database.");
     }
   }
 
@@ -141,10 +157,16 @@ public class Warehouse {
 
   private void showPositionById() {
     Scanner scanner = new Scanner(System.in);
-    int column = Integer.valueOf(scanner.next());
-    int row = Integer.valueOf(scanner.next());
+    int column, row;
 
-    Position p = warehousePositions.get(column, row);
-    System.out.println(!p.isEmpty() ? p : "There's nothing here");
+    try {
+      column = Integer.valueOf(scanner.next());
+      row = Integer.valueOf(scanner.next());
+
+      Position p = warehousePositions.get(column, row);
+      System.out.println(!p.isEmpty() ? p : "There's nothing here");
+    } catch (NumberFormatException e) {
+      System.out.println("Wrong kind of arguments. Integers expected");
+    }
   }
 }

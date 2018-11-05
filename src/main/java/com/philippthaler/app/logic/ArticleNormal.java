@@ -52,10 +52,7 @@ public class ArticleNormal implements Article {
   }
 
   private String generateItemNumber(String articleName) {
-    StringBuilder itemNumber = new StringBuilder();
-    articleName.toLowerCase().chars().forEach(itemNumber::append);
-
-    return itemNumber.toString();
+    return articleName.hashCode()+"";
   }
 
 
