@@ -1,12 +1,14 @@
 package com.philippthaler.app.logic;
 
+import com.philippthaler.app.exceptions.PositionFullException;
 import com.philippthaler.app.utils.Database2DConfig;
 
 public class Position {
-
   private Article article;
   private int numOfArticles;
   private Database2DConfig arrayPosition;
+
+  private static final int MAX_AMOUNT_OF_ARTICLES = 10;
 
   public Position(int column, int row) {
     this(null, column, row);
@@ -43,10 +45,15 @@ public class Position {
   }
 
   public void setNumOfArticles(int numOfArticles) {
-    this.numOfArticles = numOfArticles;
+    if(numOfArticles > this.numOfArticles) {
+      addNumOfArticles(numOfArticles-this.numOfArticles);
+    } else {
+      subtractNumOfArticles(this.numOfArticles - numOfArticles);
+    }
   }
 
   public void addNumOfArticles(int amount) {
+    checkAmount(amount);
     numOfArticles += amount;
   }
 
@@ -55,6 +62,12 @@ public class Position {
       numOfArticles = 0;
     }
     numOfArticles -= amount;
+  }
+
+  private void checkAmount(int amount) {
+    if (numOfArticles + amount > MAX_AMOUNT_OF_ARTICLES) {
+      throw new PositionFullException("Too many Articles in this position: " + numOfArticles + "+" + amount + "=" + (numOfArticles + amount) + "\nOnly " + MAX_AMOUNT_OF_ARTICLES + " allowed!");
+    }
   }
 
   public boolean isEmpty() {
