@@ -9,7 +9,6 @@ import com.philippthaler.app.utils.Position2DDatabase;
 import com.philippthaler.app.utils.Price;
 
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * Controller class that controls the articleDatabase and die View
@@ -50,11 +49,17 @@ public class Warehouse {
           break;
         case "q":
         case "quit":
+        case "exit":
+          viewCommands.runCommand("quit", userInterface);
           running = false;
           break;
         case "position":
           viewCommands.runCommand(command, userInterface);
-          getPosition();
+          getPositions();
+          break;
+        case "showposition":
+          viewCommands.runCommand(command, userInterface);
+          showPositionById();
           break;
         case "help":
         default:
@@ -102,7 +107,7 @@ public class Warehouse {
     // TODO
   }
 
-  private void getPosition() {
+  private void getPositions() {
     Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
 
@@ -110,5 +115,14 @@ public class Warehouse {
     for (Database2DConfig config : warehousePositions.getPositions(name)) {
       System.out.println(config);
     }
+  }
+
+  private void showPositionById() {
+    Scanner scanner = new Scanner(System.in);
+    int column = Integer.valueOf(scanner.next());
+    int row = Integer.valueOf(scanner.next());
+
+    Position p = warehousePositions.get(column, row);
+    System.out.println(!p.isEmpty() ? p : "There's nothing here");
   }
 }

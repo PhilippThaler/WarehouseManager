@@ -15,18 +15,18 @@ public class UserInterface implements View {
     showHelp();
   }
 
+  @Override
+  public void quit() {
+    System.out.println("Exiting the program...");
+  }
+
   public void add() {
-    System.out.println("Enter the Article Information, seperated by whitespace");
+    System.out.println("Enter the Article Information, separated by whitespace");
     System.out.println("[Name] [Price] [Supplier] [Packaging Unit]");
   }
 
   public void remove() {
     System.out.println("Enter the article name: ");
-  }
-
-  @Override
-  public void input() {
-    System.out.println("input");
   }
 
   @Override
@@ -43,12 +43,16 @@ public class UserInterface implements View {
   }
 
   public void config() {
-    System.out.println("Enter the number of rows and columns you'd like, seperated by whitespace");
+    System.out.println("Enter the number of rows and columns you'd like, separated by whitespace");
 
   }
 
   public void showPositions() {
     System.out.println("Enter the name of the article you'd like to search:");
+  }
+
+  public void showPositionById() {
+    System.out.println("Enter the column and the row, separated by whitespace");
   }
 
 

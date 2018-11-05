@@ -17,11 +17,12 @@ public class ViewCommandDatabase {
   public HashMap<String, Command> initDatabase() {
     HashMap<String, Command> temp = new HashMap<>();
     temp.put("help", View::showHelp);
-    temp.put("start", View::start);
     temp.put("inventory", View::showAll);
     temp.put("config", View::config);
     temp.put("add", View::add);
     temp.put("position", View::showPositions);
+    temp.put("showposition", View::showPositionById);
+    temp.put("quit", View::quit);
 
     return temp;
   }
