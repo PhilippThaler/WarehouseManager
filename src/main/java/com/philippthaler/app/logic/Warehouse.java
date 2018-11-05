@@ -15,7 +15,8 @@ import java.util.Scanner;
  */
 public class Warehouse {
 
-  public static boolean running = true;
+  private static boolean running = true;
+  private Scanner scanner;
 
   private ArticleDatabase articleDatabase;
   private ViewCommandDatabase viewCommands;
@@ -23,6 +24,7 @@ public class Warehouse {
   private UserInterface userInterface;
 
   public Warehouse(int columns, int rows) {
+    scanner = new Scanner(System.in);
     viewCommands = new ViewCommandDatabase();
     articleDatabase = ArticleDatabase.getInstance();
     warehousePositions = new Position2DDatabase(columns, rows);
@@ -34,10 +36,10 @@ public class Warehouse {
     System.out.println("Warehouse Managing");
     System.out.println("------------------------");
     initWarehouse();
-    Scanner scanner = new Scanner(System.in);
     while (running) {
       userInterface.start();
       String command = scanner.next().toLowerCase();
+      scanner.nextLine();
       switch (command) {
         case "add":
           viewCommands.runCommand(command, userInterface);
@@ -88,8 +90,6 @@ public class Warehouse {
   }
 
   private void configWarehouse() {
-    Scanner scanner = new Scanner(System.in);
-
     try {
       int columns = Integer.valueOf(scanner.next());
       int rows = Integer.valueOf(scanner.next());
@@ -100,7 +100,6 @@ public class Warehouse {
   }
 
   private void addArticle() {
-    Scanner scanner = new Scanner(System.in);
     String[] args = scanner.nextLine().split(" ");
 
     try {
@@ -108,7 +107,7 @@ public class Warehouse {
       Price price = new Price(args[1]);
       Supplier supplier = new Supplier(args[2]);
       PackagingUnit packagingUnit = new PackagingUnit(args[3]);
-      int numOfArticles = Integer.valueOf(args[4]);
+      int numOfArticles = args.length < 5 ? 1 : Integer.valueOf(args[4]);
       Article article = new ArticleNormal(name, price, supplier, packagingUnit);
 
       addArticle(article, numOfArticles);
@@ -139,14 +138,12 @@ public class Warehouse {
   }
 
   private void removeArticle() {
-    Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
 
     // TODO
   }
 
   private void getPositions() {
-    Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
 
     System.out.println("Positions for Article " + name + ":");
@@ -156,7 +153,6 @@ public class Warehouse {
   }
 
   private void showPositionById() {
-    Scanner scanner = new Scanner(System.in);
     int column, row;
 
     try {

@@ -52,13 +52,13 @@ public class ArticleNormal implements Article {
   }
 
   private String generateItemNumber(String articleName) {
-    return articleName.hashCode()+"";
+    return Math.abs(articleName.hashCode()) + "";
   }
 
 
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof Article && ((ArticleNormal) obj).name==name && ((ArticleNormal) obj).itemNumber.equals(itemNumber)&&((ArticleNormal) obj).price.equals(price) && ((ArticleNormal) obj).price.equals(price);
+    return obj instanceof Article && ((ArticleNormal) obj).name == name && ((ArticleNormal) obj).itemNumber.equals(itemNumber) && ((ArticleNormal) obj).price.equals(price) && ((ArticleNormal) obj).price.equals(price);
   }
 
   @Override

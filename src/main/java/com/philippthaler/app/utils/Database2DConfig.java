@@ -33,8 +33,8 @@ public class Database2DConfig {
   }
 
   private void checkIndices(int column, int row) {
-    if(column <= 0 || row <= 0) {
-      throw new IllegalArgumentException("The column/row size can't be less or equals than zero\nColumn: " + column + "Row: " + row);
+    if(column < 0 || row < 0) {
+      throw new IllegalArgumentException("The column/row size can't be less than zero\nColumn: " + column + "Row: " + row);
     }
   }
 
