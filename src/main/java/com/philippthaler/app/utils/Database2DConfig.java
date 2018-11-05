@@ -27,6 +27,6 @@ public class Database2DConfig {
 
   @Override
   public String toString() {
-    return "Column: " + column + "Row: " + row;
+    return "Column: " + column + ", Row: " + row;
   }
 }

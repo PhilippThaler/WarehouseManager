@@ -21,7 +21,7 @@ public class Position {
   }
 
   public Position(Article article, Database2DConfig config) {
-    article = article;
+    this.article = article;
     numOfArticles = 0;
     arrayPosition = config;
   }
