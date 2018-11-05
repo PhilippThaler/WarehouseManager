@@ -9,6 +9,7 @@ import com.philippthaler.app.utils.Position2DDatabase;
 import com.philippthaler.app.utils.Price;
 
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Controller class that controls the articleDatabase and die View
@@ -33,6 +34,7 @@ public class Warehouse {
     System.out.println("------------------------");
     System.out.println("Warehouse Managing");
     System.out.println("------------------------");
+    initWarehouse();
     Scanner scanner = new Scanner(System.in);
     while (running) {
       userInterface.start();
@@ -62,6 +64,12 @@ public class Warehouse {
     }
   }
 
+  private void initWarehouse() {
+    for(String key : articleDatabase.createArticleMap().keySet()) {
+      addArticle(articleDatabase.getArticle(key));
+    }
+  }
+
   private void showAll() {
     Position[] nonEmpty = warehousePositions.getArrayOfNonEmptyPositions();
 
@@ -78,9 +86,12 @@ public class Warehouse {
     PackagingUnit packagingUnit = new PackagingUnit(scanner.next());
     Article article = new ArticleNormal(name, "2", price, supplier, packagingUnit);
 
+    addArticle(article);
+  }
+
+  private void addArticle(Article article) {
     Position newPosition = new Position(article, warehousePositions.getNextFreePosition());
     warehousePositions.add(newPosition);
-
     System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
   }
 

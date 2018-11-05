@@ -111,7 +111,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
         if(positions[i][j].getArticle() != null) {
-          if(positions[i][j].getArticle().getName().equals(articleName)) {
+          if(positions[i][j].getArticle().getName().toLowerCase().equals(articleName.toLowerCase())) {
             positionList.add(positions[i][j].getArrayPosition());
           }
         }
