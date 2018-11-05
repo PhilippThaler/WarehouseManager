@@ -22,7 +22,7 @@ public class UserInterface implements View {
 
   public void add() {
     System.out.println("Enter the Article Information, separated by whitespace");
-    System.out.println("[Name] [Price] [Supplier] [Packaging Unit]");
+    System.out.println("[Name] [Price] [Supplier] [Packaging Unit] [Number of Articles (default=1)]");
   }
 
   public void remove() {

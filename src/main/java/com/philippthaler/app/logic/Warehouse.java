@@ -100,6 +100,16 @@ public class Warehouse {
     System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
   }
 
+  private void addArticleToDb(Article article) {
+    if (isArticleInDb(article)) {
+      articleDatabase.putArticle(article.getName().toLowerCase(), (ArticleNormal) article);
+    }
+  }
+
+  private boolean isArticleInDb(Article article) {
+    return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
+  }
+
   private void removeArticle() {
     Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
