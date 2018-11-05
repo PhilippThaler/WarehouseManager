@@ -47,6 +47,7 @@ public class Warehouse {
           viewCommands.runCommand(command, userInterface);
           showAll();
           break;
+          
         case "q":
         case "quit":
         case "exit":
@@ -71,7 +72,7 @@ public class Warehouse {
 
   private void initWarehouse() {
     for (String key : articleDatabase.createArticleMap().keySet()) {
-      addArticle(articleDatabase.getArticle(key));
+      addArticle(articleDatabase.getArticle(key), 1);
     }
   }
 
@@ -85,17 +86,28 @@ public class Warehouse {
 
   private void addArticle() {
     Scanner scanner = new Scanner(System.in);
-    String name = scanner.next();
-    Price price = new Price(scanner.next());
-    Supplier supplier = new Supplier(scanner.next());
-    PackagingUnit packagingUnit = new PackagingUnit(scanner.next());
-    Article article = new ArticleNormal(name, price, supplier, packagingUnit);
+    String input = scanner.nextLine();
+    String[] params = input.split(" ");
 
-    addArticle(article);
+    try {
+      String name = params[0];
+      Price price = new Price(params[1]);
+      Supplier supplier = new Supplier(params[2]);
+      PackagingUnit packagingUnit = new PackagingUnit(params[3]);
+      int numOfArticles = Integer.valueOf(params[4]);
+      Article article = new ArticleNormal(name, price, supplier, packagingUnit);
+
+      addArticle(article, numOfArticles);
+    } catch (ArrayIndexOutOfBoundsException e) {
+      System.out.println("Wrong number of arguments");
+    } catch (NumberFormatException e) {
+      System.out.println("Wrong arguments. Enter a number at the end");
+    }
   }
 
-  private void addArticle(Article article) {
+  private void addArticle(Article article, int numOfArticles) {
     Position newPosition = new Position(article, warehousePositions.getNextFreePosition());
+    newPosition.addNumOfArticles(numOfArticles);
     warehousePositions.add(newPosition);
     System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
   }

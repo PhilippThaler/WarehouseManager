@@ -69,7 +69,7 @@ public class Position {
 
   @Override
   public String toString() {
-    return "Article: " + article + ", Number: " + numOfArticles + arrayPosition;
+    return article + ", Amount: " + numOfArticles + arrayPosition;
   }
 }
 
