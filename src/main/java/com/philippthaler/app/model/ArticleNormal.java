@@ -1,6 +1,6 @@
-package com.philippthaler.app.logic;
+package com.philippthaler.app.model;
 
-import com.philippthaler.app.utils.Price;
+import com.philippthaler.app.utils.helpers.Price;
 
 import java.util.HashMap;
 

@@ -1,8 +1,8 @@
-package com.philippthaler.app.utils;
+package com.philippthaler.app.utils.warehouse;
 
-import com.philippthaler.app.logic.Article;
-import com.philippthaler.app.logic.Position;
+import com.philippthaler.app.model.Position;
 import com.philippthaler.app.exceptions.PositionTakenException;
+import com.philippthaler.app.utils.helpers.Database2DConfig;
 
 import java.util.ArrayList;
 import java.util.List;

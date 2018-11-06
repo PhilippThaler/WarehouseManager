@@ -1,13 +1,8 @@
 package com.philippthaler.app.ui;
 
 import com.philippthaler.app.database.ViewCommandDatabase;
-import com.philippthaler.app.ui.commands.View;
 
 public class UserInterface implements View {
-
-  public UserInterface() {
-
-  }
 
   @Override
   public void start() {
@@ -42,7 +37,7 @@ public class UserInterface implements View {
 
   @Override
   public void showAll() {
-    System.out.println("Show All");
+    System.out.println("Showing all entries...");
   }
 
   @Override

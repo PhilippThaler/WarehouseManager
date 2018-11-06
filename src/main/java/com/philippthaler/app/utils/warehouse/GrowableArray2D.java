@@ -1,4 +1,6 @@
-package com.philippthaler.app.utils;
+package com.philippthaler.app.utils.warehouse;
+
+import com.philippthaler.app.utils.helpers.Database2DConfig;
 
 import java.util.List;
 

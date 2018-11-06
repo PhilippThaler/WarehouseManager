@@ -1,7 +1,7 @@
-package com.philippthaler.app.logic;
+package com.philippthaler.app.model;
 
 import com.philippthaler.app.exceptions.PositionFullException;
-import com.philippthaler.app.utils.Database2DConfig;
+import com.philippthaler.app.utils.helpers.Database2DConfig;
 
 public class Position {
   private Article article;

@@ -1,10 +1,10 @@
 package com.philippthaler.app.database;
 
-import com.philippthaler.app.logic.ArticleInfo;
-import com.philippthaler.app.logic.ArticleNormal;
-import com.philippthaler.app.logic.PackagingUnit;
-import com.philippthaler.app.utils.Price;
-import com.philippthaler.app.logic.Supplier;
+import com.philippthaler.app.model.ArticleInfo;
+import com.philippthaler.app.model.ArticleNormal;
+import com.philippthaler.app.model.PackagingUnit;
+import com.philippthaler.app.utils.helpers.Price;
+import com.philippthaler.app.model.Supplier;
 
 import java.util.HashMap;
 import java.util.Map;

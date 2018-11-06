@@ -1,4 +1,4 @@
-package com.philippthaler.app.ui.commands;
+package com.philippthaler.app.ui;
 
 public interface View {
   void start();

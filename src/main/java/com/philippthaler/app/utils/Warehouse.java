@@ -1,14 +1,18 @@
-package com.philippthaler.app.logic;
+package com.philippthaler.app.utils;
 
+import com.philippthaler.app.App;
 import com.philippthaler.app.database.ArticleDatabase;
 import com.philippthaler.app.database.ViewCommandDatabase;
 import com.philippthaler.app.exceptions.PositionFullException;
+import com.philippthaler.app.model.*;
 import com.philippthaler.app.ui.UserInterface;
-import com.philippthaler.app.utils.Database2DConfig;
-import com.philippthaler.app.utils.GrowableArray2D;
-import com.philippthaler.app.utils.Position2DDatabase;
-import com.philippthaler.app.utils.Price;
+import com.philippthaler.app.commands.ControlCommand;
+import com.philippthaler.app.utils.helpers.Database2DConfig;
+import com.philippthaler.app.utils.warehouse.GrowableArray2D;
+import com.philippthaler.app.utils.warehouse.Position2DDatabase;
+import com.philippthaler.app.utils.helpers.Price;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,20 +21,28 @@ import java.util.Scanner;
  */
 public class Warehouse {
 
-  private static boolean running = true;
+  private boolean running = true;
   private Scanner scanner;
 
   private ArticleDatabase articleDatabase;
   private ViewCommandDatabase viewCommands;
+  private ControlCommandDatabase controlCommands;
   private GrowableArray2D<Position> warehousePositions;
   private UserInterface userInterface;
 
-  public Warehouse(int columns, int rows) {
+  private static final Warehouse instance = new Warehouse(App.COLUMN_INIT, App.ROW_INIT);
+
+  private Warehouse(int columns, int rows) {
     scanner = new Scanner(System.in);
     viewCommands = new ViewCommandDatabase();
     articleDatabase = ArticleDatabase.getInstance();
+    controlCommands = new ControlCommandDatabase();
     warehousePositions = new Position2DDatabase(columns, rows);
     userInterface = new UserInterface();
+  }
+
+  public static Warehouse getInstance() {
+    return instance;
   }
 
   public void startUI() {
@@ -45,33 +57,8 @@ public class Warehouse {
         command = "quit";
       }
       viewCommands.runCommand(command, userInterface);
+      controlCommands.runCommand(command, this);
       scanner.nextLine();
-      switch (command) {
-        case "add":
-          addArticle();
-          break;
-        case "remove":
-          removeArticle();
-          break;
-        case "inventory":
-          showAll();
-          break;
-        case "config":
-          configWarehouse();
-          break;
-        case "quit":
-          running = false;
-          break;
-        case "position":
-          getPositions();
-          break;
-        case "showposition":
-          showPositionById();
-          break;
-        case "help":
-        default:
-          break;
-      }
     }
   }
 
@@ -97,6 +84,10 @@ public class Warehouse {
     } catch (NumberFormatException e) {
       System.out.println("Wrong kind of arguments. Integers expected");
     }
+  }
+
+  private void quit() {
+    running = false;
   }
 
   /**
@@ -222,6 +213,41 @@ public class Warehouse {
       System.out.println(!p.isEmpty() ? p : "There's nothing here");
     } catch (NumberFormatException e) {
       System.out.println("Wrong kind of arguments. Integers expected");
+    }
+  }
+
+  class ControlCommandDatabase {
+    private HashMap<String, ControlCommand> commands;
+
+    public ControlCommandDatabase() {
+      commands = initDatabase();
+
+    }
+
+    public HashMap<String, ControlCommand> initDatabase() {
+      HashMap<String, ControlCommand> temp = new HashMap<>();
+      temp.put("inventory", Warehouse::showAll);
+      temp.put("config", Warehouse::configWarehouse);
+      temp.put("add", Warehouse::addArticle);
+      temp.put("position", Warehouse::getPositions);
+      temp.put("showposition", Warehouse::showPositionById);
+      temp.put("remove", Warehouse::removeArticle);
+      temp.put("quit", Warehouse::quit);
+
+      return temp;
+    }
+
+    public void runCommand(String command, Warehouse warehouse) {
+      if (commands.get(command) == null) {
+        return;
+      }
+      commands.get(command).execute(warehouse);
+    }
+
+    public String[] getListOfCommands() {
+      String[] commandStrings = commands.keySet().toArray(new String[0]);
+
+      return commandStrings;
     }
   }
 }

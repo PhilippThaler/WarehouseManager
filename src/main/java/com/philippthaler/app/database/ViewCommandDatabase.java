@@ -1,21 +1,21 @@
 package com.philippthaler.app.database;
 
 import com.philippthaler.app.ui.UserInterface;
-import com.philippthaler.app.ui.commands.Command;
-import com.philippthaler.app.ui.commands.View;
+import com.philippthaler.app.commands.ViewCommand;
+import com.philippthaler.app.ui.View;
 
 import java.util.*;
 
 public class ViewCommandDatabase {
-  private static HashMap<String, Command> commands;
+  private static HashMap<String, ViewCommand> commands;
 
   public ViewCommandDatabase() {
     commands = initDatabase();
 
   }
 
-  public HashMap<String, Command> initDatabase() {
-    HashMap<String, Command> temp = new HashMap<>();
+  public HashMap<String, ViewCommand> initDatabase() {
+    HashMap<String, ViewCommand> temp = new HashMap<>();
     temp.put("help", View::showHelp);
     temp.put("inventory", View::showAll);
     temp.put("config", View::config);
@@ -30,10 +30,10 @@ public class ViewCommandDatabase {
 
   public void runCommand(String command, UserInterface ui) {
     if (commands.get(command) == null) {
-      commands.get("help").run(ui);
+      commands.get("help").execute(ui);
       return;
     }
-    commands.get(command).run(ui);
+    commands.get(command).execute(ui);
   }
 
   public static String[] getListOfCommands() {

@@ -1,4 +1,4 @@
-package com.philippthaler.app.utils;
+package com.philippthaler.app.utils.helpers;
 
 public class Database2DConfig {
   private int column;

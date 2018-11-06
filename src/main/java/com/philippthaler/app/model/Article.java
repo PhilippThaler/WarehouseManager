@@ -1,8 +1,6 @@
-package com.philippthaler.app.logic;
+package com.philippthaler.app.model;
 
-import com.philippthaler.app.utils.Price;
-
-import java.util.Map;
+import com.philippthaler.app.utils.helpers.Price;
 
 public interface Article {
   String getName();
