@@ -41,37 +41,35 @@ public class Warehouse {
     while (running) {
       userInterface.start();
       String command = scanner.next().toLowerCase();
+      if (command.equals("q") || command.equals("exit")) {
+        command = "quit";
+      }
+      viewCommands.runCommand(command, userInterface);
       scanner.nextLine();
       switch (command) {
         case "add":
-          viewCommands.runCommand(command, userInterface);
           addArticle();
           break;
+        case "remove":
+          removeArticle();
+          break;
         case "inventory":
-          viewCommands.runCommand(command, userInterface);
           showAll();
           break;
         case "config":
-          viewCommands.runCommand(command, userInterface);
           configWarehouse();
           break;
-        case "q":
         case "quit":
-        case "exit":
-          viewCommands.runCommand("quit", userInterface);
           running = false;
           break;
         case "position":
-          viewCommands.runCommand(command, userInterface);
           getPositions();
           break;
         case "showposition":
-          viewCommands.runCommand(command, userInterface);
           showPositionById();
           break;
         case "help":
         default:
-          viewCommands.runCommand(command, userInterface);
           break;
       }
     }
