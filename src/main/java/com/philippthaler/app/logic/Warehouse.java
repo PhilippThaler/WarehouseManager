@@ -169,9 +169,9 @@ public class Warehouse {
   private void removeArticle() {
     String name = scanner.next();
 
-    List<Database2DConfig> positionList = warehousePositions.getPositions("name");
+    List<Database2DConfig> positionList = warehousePositions.getPositions(name);
     if (positionList.size() >= 1) {
-      System.out.println("Warehouse Positions for " + name);
+      System.out.println("Warehouse Positions for " + name + ":");
       for (int i = 0; i < positionList.size(); i++) {
         System.out.println(i + ". " + positionList.get(i));
       }
@@ -184,11 +184,21 @@ public class Warehouse {
         }
         return;
       } else {
-        System.out.println("Which position would you like to remove?");
-        int input = Integer.valueOf(scanner.next());
-        Position temp = warehousePositions.get(positionList.get(input));
-        temp.setArticle(null);
-        temp.setNumOfArticles(0);
+        System.out.println("Which position would you like to remove? [1, 2, 3, 1-3,...]");
+        String input = scanner.next();
+        if (input.length() == 1) {
+          Position temp = warehousePositions.get(positionList.get(Integer.valueOf(input)));
+          temp.setArticle(null);
+          temp.setNumOfArticles(0);
+        } else if (input.split("-").length == 2) {
+          String[] range = input.split("-");
+
+          for (int i = Integer.valueOf(range[0]); i < Integer.valueOf(range[1]); i++) {
+            Position temp = warehousePositions.get(positionList.get(i));
+            temp.setArticle(null);
+            temp.setNumOfArticles(0);
+          }
+        }
       }
     }
   }
