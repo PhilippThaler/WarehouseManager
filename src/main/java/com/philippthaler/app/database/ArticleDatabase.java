@@ -9,6 +9,9 @@ import com.philippthaler.app.logic.Supplier;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Simple class for initializing a few values to the warehouse
+ */
 public class ArticleDatabase {
 
   private HashMap<String, PackagingUnit> packagingUnits;
@@ -34,8 +37,7 @@ public class ArticleDatabase {
         "cola", new ArticleNormal("Cola", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
         "rindfleisch", new ArticleNormal("Rindfleisch", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
     );
-    HashMap<String, ArticleNormal> map = new HashMap<>();
-    map.putAll(temp);
+    HashMap<String, ArticleNormal> map = new HashMap<>(temp);
     return map;
   }
 
@@ -47,8 +49,7 @@ public class ArticleDatabase {
         "fass", new PackagingUnit("Fass"),
         "kg", new PackagingUnit("kg")
     );
-    HashMap<String, PackagingUnit> map = new HashMap<>();
-    map.putAll(temp);
+    HashMap<String, PackagingUnit> map = new HashMap<>(temp);
     return map;
   }
 
@@ -58,8 +59,7 @@ public class ArticleDatabase {
         "wedl", new Supplier("C&C Wedl"),
         "fleischhof", new Supplier("Fleischhof Oberland")
     );
-    HashMap<String, Supplier> map = new HashMap<>();
-    map.putAll(temp);
+    HashMap<String, Supplier> map = new HashMap<>(temp);
     return map;
   }
 

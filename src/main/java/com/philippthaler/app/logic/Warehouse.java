@@ -153,7 +153,7 @@ public class Warehouse {
   /**
    * Adds an article to the Article Database, if it's not in it yet.
    *
-   * @param article
+   * @param article The article
    */
   private void addArticleToDb(Article article) {
     if (!isArticleInDb(article)) {
@@ -182,7 +182,6 @@ public class Warehouse {
           temp.setArticle(null);
           temp.setNumOfArticles(0);
         }
-        return;
       } else {
         System.out.println("Which position would you like to remove? [1, 2, 3, 1-3,...]");
         String input = scanner.next();
