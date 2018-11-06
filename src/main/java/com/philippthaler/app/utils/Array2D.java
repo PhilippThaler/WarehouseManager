@@ -10,8 +10,10 @@ public interface Array2D<T> {
   void add(T object);
   void add(T object, int column, int row);
   void set(T object, int column, int row);
+  void set(T object, Database2DConfig config);
   void remove(int column, int row);
   T get(int column, int row);
+  T get(Database2DConfig config);
   boolean isIndexEmpty(int column, int row);
   boolean contains(Object o);
   int getColumns();

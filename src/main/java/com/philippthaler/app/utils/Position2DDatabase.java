@@ -59,17 +59,31 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
 
   @Override
   public void set(Position position, int column, int row) {
+    set(position, new Database2DConfig(column, row));
+  }
+
+  @Override
+  public void set(Position position, Database2DConfig config) {
+    int column = config.getColumn();
+    int row = config.getRow();
     checkIndex(column, row);
     positions[column][row] = position;
   }
 
   @Override
   public void remove(int column, int row) {
-    positions[column][row] = new Position(column,row);
+    positions[column][row] = new Position(column, row);
   }
 
   @Override
   public Position get(int column, int row) {
+    return get(new Database2DConfig(column, row));
+  }
+
+  @Override
+  public Position get(Database2DConfig config) {
+    int column = config.getColumn();
+    int row = config.getRow();
     checkIndex(column, row);
     return positions[column][row];
   }
@@ -77,6 +91,15 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
   @Override
   public boolean isIndexEmpty(int column, int row) {
     return positions[column][row].isEmpty();
+  }
+
+  public boolean isIndexFull(int column, int row, String articleName) {
+    if (positions[column][row].getArticle().getName().toLowerCase().equals(articleName.toLowerCase()) && !positions[column][row].isFull()) {
+      return false;
+    } else if (isIndexEmpty(column, row)) {
+      return false;
+    }
+    return true;
   }
 
   @Override
@@ -94,11 +117,11 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
   }
 
   @Override
-  public Database2DConfig getNextFreePosition() {
+  public Database2DConfig getNextFreePosition(String articleName) {
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
-        if(isIndexEmpty(i,j)) {
-          return new Database2DConfig(i,j);
+        if (isIndexEmpty(i, j) || !isIndexFull(i, j, articleName)) {
+          return new Database2DConfig(i, j);
         }
       }
     }
@@ -110,8 +133,8 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
     List<Database2DConfig> positionList = new ArrayList<>();
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
-        if(positions[i][j].getArticle() != null) {
-          if(positions[i][j].getArticle().getName().toLowerCase().equals(articleName.toLowerCase())) {
+        if (positions[i][j].getArticle() != null) {
+          if (positions[i][j].getArticle().getName().toLowerCase().equals(articleName.toLowerCase())) {
             positionList.add(positions[i][j].getArrayPosition());
           }
         }
@@ -134,7 +157,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
   public void clear() {
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
-        positions[i][j] = new Position(i,j);
+        positions[i][j] = new Position(i, j);
       }
     }
   }
@@ -229,7 +252,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
         if (positions[i][j] == null) {
-          positions[i][j] = new Position(i,j);
+          positions[i][j] = new Position(i, j);
         }
       }
     }

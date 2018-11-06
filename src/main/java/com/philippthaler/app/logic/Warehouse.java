@@ -2,6 +2,7 @@ package com.philippthaler.app.logic;
 
 import com.philippthaler.app.database.ArticleDatabase;
 import com.philippthaler.app.database.ViewCommandDatabase;
+import com.philippthaler.app.exceptions.PositionFullException;
 import com.philippthaler.app.ui.UserInterface;
 import com.philippthaler.app.utils.Database2DConfig;
 import com.philippthaler.app.utils.GrowableArray2D;
@@ -119,11 +120,22 @@ public class Warehouse {
   }
 
   private void addArticle(Article article, int numOfArticles) {
-    Position newPosition = new Position(article, warehousePositions.getNextFreePosition());
-    newPosition.addNumOfArticles(numOfArticles);
-    warehousePositions.add(newPosition);
+    try {
+      Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
+      temp.setArticle(article);
+      temp.setNumOfArticles(numOfArticles);
+    } catch (PositionFullException e) {
+      Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
+      // The amount of Articles that can still be saved into this position.
+      int remainingSpace = Position.getMaxAmountOfArticles() - temp.getNumOfArticles();
+      int remainder = numOfArticles - remainingSpace;
+      temp.setArticle(article);
+      temp.addNumOfArticles(remainingSpace);
+      addArticle(article, remainder);
+      System.out.println(temp.getArticle().getName() + " added on position: " + temp.getArrayPosition());
+    }
+
     addArticleToDb(article);
-    System.out.println(newPosition.getArticle().getName() + " added on position: " + newPosition.getArrayPosition());
   }
 
   private void addArticleToDb(Article article) {

@@ -45,8 +45,8 @@ public class Position {
   }
 
   public void setNumOfArticles(int numOfArticles) {
-    if(numOfArticles > this.numOfArticles) {
-      addNumOfArticles(numOfArticles-this.numOfArticles);
+    if (numOfArticles > this.numOfArticles) {
+      addNumOfArticles(numOfArticles - this.numOfArticles);
     } else {
       subtractNumOfArticles(this.numOfArticles - numOfArticles);
     }
@@ -70,8 +70,16 @@ public class Position {
     }
   }
 
+  public static int getMaxAmountOfArticles() {
+    return MAX_AMOUNT_OF_ARTICLES;
+  }
+
   public boolean isEmpty() {
     return article == null;
+  }
+
+  public boolean isFull() {
+    return numOfArticles == MAX_AMOUNT_OF_ARTICLES;
   }
 
   @Override
@@ -82,7 +90,7 @@ public class Position {
 
   @Override
   public String toString() {
-    return article + ", Amount: " + numOfArticles + arrayPosition;
+    return article + ", Amount: " + numOfArticles + ", " + arrayPosition;
   }
 }
 
