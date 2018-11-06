@@ -9,6 +9,7 @@ import com.philippthaler.app.utils.GrowableArray2D;
 import com.philippthaler.app.utils.Position2DDatabase;
 import com.philippthaler.app.utils.Price;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -100,6 +101,9 @@ public class Warehouse {
     }
   }
 
+  /**
+   * Method for the user input for adding an article.
+   */
   private void addArticle() {
     String[] args = scanner.nextLine().split(" ");
 
@@ -119,6 +123,14 @@ public class Warehouse {
     }
   }
 
+  /**
+   * Takes an article and the number of articles that should get saved.
+   * If the number of articles is bigger than Position.getMaxAmountOfArticles(), the first Position gets filled
+   * before it fills other Positions through recursion.
+   *
+   * @param article       The article that gets added
+   * @param numOfArticles The number of articles, that gets saved in Position
+   */
   private void addArticle(Article article, int numOfArticles) {
     try {
       Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
@@ -128,7 +140,9 @@ public class Warehouse {
       Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
       // The amount of Articles that can still be saved into this position.
       int remainingSpace = Position.getMaxAmountOfArticles() - temp.getNumOfArticles();
+      // The remainder that gets taken to the next iteration.
       int remainder = numOfArticles - remainingSpace;
+
       temp.setArticle(article);
       temp.addNumOfArticles(remainingSpace);
       addArticle(article, remainder);
@@ -138,6 +152,11 @@ public class Warehouse {
     addArticleToDb(article);
   }
 
+  /**
+   * Adds an article to the Article Database, if it's not in it yet.
+   *
+   * @param article
+   */
   private void addArticleToDb(Article article) {
     if (!isArticleInDb(article)) {
       articleDatabase.putArticle(article.getName().toLowerCase(), (ArticleNormal) article);
@@ -152,7 +171,28 @@ public class Warehouse {
   private void removeArticle() {
     String name = scanner.next();
 
-    // TODO
+    List<Database2DConfig> positionList = warehousePositions.getPositions("name");
+    if (positionList.size() >= 1) {
+      System.out.println("Warehouse Positions for " + name);
+      for (int i = 0; i < positionList.size(); i++) {
+        System.out.println(i + ". " + positionList.get(i));
+      }
+      if (positionList.size() == 1) {
+        System.out.println("Do you want to delete this item? [y/n]");
+        if (scanner.next().toLowerCase().equals("y")) {
+          Position temp = warehousePositions.get(positionList.get(0));
+          temp.setArticle(null);
+          temp.setNumOfArticles(0);
+        }
+        return;
+      } else {
+        System.out.println("Which position would you like to remove?");
+        int input = Integer.valueOf(scanner.next());
+        Position temp = warehousePositions.get(positionList.get(input));
+        temp.setArticle(null);
+        temp.setNumOfArticles(0);
+      }
+    }
   }
 
   private void getPositions() {

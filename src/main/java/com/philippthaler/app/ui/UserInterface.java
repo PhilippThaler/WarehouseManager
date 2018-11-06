@@ -20,11 +20,13 @@ public class UserInterface implements View {
     System.out.println("Exiting the program...");
   }
 
+  @Override
   public void add() {
     System.out.println("Enter the Article Information, separated by whitespace");
     System.out.println("[Name] [Price] [Supplier] [Packaging Unit] [Number of Articles (default=1)]");
   }
 
+  @Override
   public void remove() {
     System.out.println("Enter the article name: ");
   }
@@ -38,19 +40,23 @@ public class UserInterface implements View {
     System.out.println();
   }
 
+  @Override
   public void showAll() {
     System.out.println("Show All");
   }
 
+  @Override
   public void config() {
     System.out.println("Enter the number of rows and columns you'd like, separated by whitespace");
 
   }
 
+  @Override
   public void showPositions() {
     System.out.println("Enter the name of the article you'd like to search:");
   }
 
+  @Override
   public void showPositionById() {
     System.out.println("Enter the column and the row, separated by whitespace");
   }
