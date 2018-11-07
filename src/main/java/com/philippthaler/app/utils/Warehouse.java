@@ -45,7 +45,10 @@ public class Warehouse {
     return instance;
   }
 
-  public void startUI() {
+  /**
+   * Starts the warehouse management system
+   */
+  public void start() {
     System.out.println("------------------------");
     System.out.println("Warehouse Managing");
     System.out.println("------------------------");
@@ -62,20 +65,28 @@ public class Warehouse {
     }
   }
 
+  /**
+   * Initializes the warehouse with the values saved in the articleDatabase
+   */
   private void initWarehouse() {
     for (String key : articleDatabase.getArticles().keySet()) {
       addArticle(articleDatabase.getArticle(key), 1);
     }
   }
 
+  /**
+   * Displays all non empty warehouse positions
+   */
   private void showAll() {
     Position[] nonEmpty = warehousePositions.getArrayOfNonEmptyPositions();
-
     for (Position p : nonEmpty) {
       System.out.println(p);
     }
   }
 
+  /**
+   * Method for resizing the warehouse
+   */
   private void configWarehouse() {
     try {
       int columns = Integer.valueOf(scanner.next());
@@ -154,6 +165,10 @@ public class Warehouse {
     }
   }
 
+  /**
+   * @param article The article
+   * @return Returns true if an Article with the same name is in the articleDatabase
+   */
   private boolean isArticleInDb(Article article) {
     return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
   }
@@ -199,7 +214,6 @@ public class Warehouse {
           amount -= temp.getNumOfArticles();
           temp.subtractNumOfArticles(temp.getNumOfArticles());
           temp.setArticle(null);
-
         }
       }
     } catch (NumberFormatException e) {

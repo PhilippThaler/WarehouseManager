@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Simple class for initializing a few values to the warehouse
+ * Simple class for initializing a few values to the warehouse.
  */
 public class ArticleDatabase {
 

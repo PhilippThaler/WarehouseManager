@@ -6,6 +6,9 @@ import com.philippthaler.app.ui.View;
 
 import java.util.*;
 
+/**
+ * Simple command database, that holds many commands for the user interface
+ */
 public class ViewCommandDatabase {
   private static HashMap<String, ViewCommand> commands;
 
@@ -29,6 +32,12 @@ public class ViewCommandDatabase {
     return temp;
   }
 
+  /**
+   * Method for running commands. Runs the help method, when the command can't be found.
+   * Takes an instance of the ui class, on which it should be run.
+   * @param command The command that should be run
+   * @param ui The ui instance.
+   */
   public void runCommand(String command, UserInterface ui) {
     if (commands.get(command) == null) {
       commands.get("help").execute(ui);
@@ -37,6 +46,9 @@ public class ViewCommandDatabase {
     commands.get(command).execute(ui);
   }
 
+  /**
+   * @return An array of Strings for all the commands
+   */
   public static String[] getListOfCommands() {
     return commands.keySet().toArray(new String[0]);
   }

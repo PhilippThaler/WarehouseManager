@@ -4,6 +4,9 @@ import com.philippthaler.app.utils.helpers.Price;
 
 import java.util.HashMap;
 
+/**
+ * Implementation of the Article interface
+ */
 public class ArticleNormal implements Article {
 
   private String name;
@@ -43,6 +46,11 @@ public class ArticleNormal implements Article {
     this.price = price;
   }
 
+  /**
+   * Getter Method that takes an Array of ArticleInfo and returns a Hashmap.
+   * @param infos The array
+   * @return HashMap
+   */
   public HashMap<ArticleInfo, String> getInfoMapFromArray(ArticleInfo... infos) {
     HashMap<ArticleInfo, String> infoMap = new HashMap<>();
     for (ArticleInfo info : infos) {
@@ -56,9 +64,14 @@ public class ArticleNormal implements Article {
   }
 
 
+  /**
+   * Implementation of the equals method
+   * @param obj An object
+   * @return Returns true, if every field of an ArticleInfo is equals to every field of another one.
+   */
   @Override
   public boolean equals(Object obj) {
-    return obj instanceof Article && ((ArticleNormal) obj).name == name && ((ArticleNormal) obj).itemNumber.equals(itemNumber) && ((ArticleNormal) obj).price.equals(price) && ((ArticleNormal) obj).price.equals(price);
+    return obj instanceof Article && ((ArticleNormal) obj).name.equals(name) && ((ArticleNormal) obj).itemNumber.equals(itemNumber) && ((ArticleNormal) obj).price.equals(price) && ((ArticleNormal) obj).price.equals(price);
   }
 
   @Override

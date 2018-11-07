@@ -1,5 +1,8 @@
 package com.philippthaler.app.exceptions;
 
+/**
+ * Exception class that gets thrown when a position is already taken
+ */
 public class PositionTakenException extends RuntimeException {
 
   public PositionTakenException() {

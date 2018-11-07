@@ -1,5 +1,8 @@
 package com.philippthaler.app.exceptions;
 
+/**
+ * Exception class that gets thrown when a position is full.
+ */
 public class PositionFullException extends RuntimeException {
 
   public PositionFullException() {

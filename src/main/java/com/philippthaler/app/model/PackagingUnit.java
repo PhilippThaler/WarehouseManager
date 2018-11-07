@@ -1,5 +1,9 @@
 package com.philippthaler.app.model;
 
+/**
+ * Implementation of Articleinfo.
+ * Describes the packaging unit an article is packaged in
+ */
 public class PackagingUnit implements ArticleInfo, Comparable<PackagingUnit> {
 
   private String name;

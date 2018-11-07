@@ -1,5 +1,10 @@
 package com.philippthaler.app.model;
 
+/**
+ * Implementation of Articleinfo.
+ * Describes the supplier that ships articles.
+ */
+
 public class Supplier implements ArticleInfo, Comparable<Supplier> {
 
   private String name;

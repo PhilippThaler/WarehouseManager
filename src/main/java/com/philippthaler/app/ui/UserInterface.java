@@ -2,6 +2,9 @@ package com.philippthaler.app.ui;
 
 import com.philippthaler.app.database.ViewCommandDatabase;
 
+/**
+ * Implementation of the View interface.
+ */
 public class UserInterface implements View {
 
   @Override

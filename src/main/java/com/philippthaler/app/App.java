@@ -12,7 +12,7 @@ public class App {
   public static void main(String[] args) {
     Warehouse warehouse = Warehouse.getInstance();
 
-    warehouse.startUI();
+    warehouse.start();
 
   }
 }
