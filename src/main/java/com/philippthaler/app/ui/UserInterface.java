@@ -16,6 +16,11 @@ public class UserInterface implements View {
   }
 
   @Override
+  public void remove() {
+    System.out.println("Enter the article name that you'd like to remove: ");
+  }
+
+  @Override
   public void add() {
     System.out.println("Enter the Article Information, separated by whitespace");
     System.out.println("[Name] [Price] [Supplier] [Packaging Unit] [Number of Articles (default=1)]");

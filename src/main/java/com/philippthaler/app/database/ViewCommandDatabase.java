@@ -24,6 +24,7 @@ public class ViewCommandDatabase {
     temp.put("showposition", View::showPositionById);
     temp.put("quit", View::quit);
     temp.put("delete", View::delete);
+    temp.put("remove", View::remove);
 
     return temp;
   }

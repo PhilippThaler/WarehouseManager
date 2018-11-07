@@ -158,6 +158,56 @@ public class Warehouse {
     return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
   }
 
+  private void removeArticle() {
+    String name = scanner.next();
+
+    List<Database2DConfig> positionList = warehousePositions.getPositions(name);
+    if (positionList.isEmpty()) {
+      System.out.println("There are no articles of " + name + " in the warehouse");
+      return;
+    }
+    int sumOfArticles = 0;
+    for (Database2DConfig config : positionList) {
+      sumOfArticles += warehousePositions.get(config).getNumOfArticles();
+    }
+    System.out.println("There are " + sumOfArticles + " articles of " + name);
+    System.out.println("How many would you like to remove? [q] to abort");
+    String input = scanner.next();
+
+    try {
+      if (input.equals("q")) {
+        return;
+      }
+      while (Integer.valueOf(input) <= 0 || Integer.valueOf(input) > sumOfArticles) {
+        System.out.println("The warehouse has " + sumOfArticles + " of " + name + "!");
+        input = scanner.next();
+      }
+      int amount = Integer.valueOf(input);
+      for (Database2DConfig config : positionList) {
+        Position temp = warehousePositions.get(config);
+        if (temp.getNumOfArticles() >= amount) {
+          // If there are more articles in the position, remove them all
+          temp.subtractNumOfArticles(amount);
+          if (temp.getNumOfArticles() == 0) {
+            temp.setArticle(null);
+          }
+          return;
+        } else {
+          if(amount == 0) {
+            return;
+          }
+          amount -= temp.getNumOfArticles();
+          temp.subtractNumOfArticles(temp.getNumOfArticles());
+          temp.setArticle(null);
+
+        }
+      }
+    } catch (NumberFormatException e) {
+      System.out.println("Wrong input. Aborting");
+    }
+  }
+
+
   private void deleteArticle() {
     String name = scanner.next();
 
@@ -234,6 +284,7 @@ public class Warehouse {
       temp.put("showposition", Warehouse::showPositionById);
       temp.put("delete", Warehouse::deleteArticle);
       temp.put("quit", Warehouse::quit);
+      temp.put("remove", Warehouse::removeArticle);
 
       return temp;
     }

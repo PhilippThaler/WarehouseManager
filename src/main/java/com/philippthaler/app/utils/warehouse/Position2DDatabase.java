@@ -117,7 +117,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
   public Database2DConfig getNextFreePosition(String articleName) {
     for (int i = 0; i < size.getColumn(); i++) {
       for (int j = 0; j < size.getRow(); j++) {
-        if (isIndexEmpty(i, j) || !isIndexFull(i, j, articleName)) {
+        if (isIndexEmpty(i, j) || !isIndexFull(i, j, articleName.toLowerCase())) {
           return new Database2DConfig(i, j);
         }
       }
