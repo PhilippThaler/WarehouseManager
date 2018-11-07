@@ -1,18 +1,18 @@
 package com.philippthaler.app.utils;
 
 import com.philippthaler.app.App;
+import com.philippthaler.app.commands.database.ControlCommandDatabase;
 import com.philippthaler.app.database.ArticleDatabase;
-import com.philippthaler.app.database.ViewCommandDatabase;
+import com.philippthaler.app.commands.database.ViewCommandDatabase;
 import com.philippthaler.app.exceptions.PositionFullException;
 import com.philippthaler.app.model.*;
 import com.philippthaler.app.ui.UserInterface;
-import com.philippthaler.app.commands.ControlCommand;
+import com.philippthaler.app.ui.View;
 import com.philippthaler.app.utils.helpers.Database2DConfig;
+import com.philippthaler.app.utils.helpers.Price;
 import com.philippthaler.app.utils.warehouse.GrowableArray2D;
 import com.philippthaler.app.utils.warehouse.Position2DDatabase;
-import com.philippthaler.app.utils.helpers.Price;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public class Warehouse {
   private ViewCommandDatabase viewCommands;
   private ControlCommandDatabase controlCommands;
   private GrowableArray2D<Position> warehousePositions;
-  private UserInterface userInterface;
+  private View userInterface;
 
   private static final Warehouse instance = new Warehouse();
 
@@ -55,6 +55,7 @@ public class Warehouse {
     initWarehouse();
     while (running) {
       userInterface.start();
+      listAllCommands();
       String command = scanner.next().toLowerCase();
       if (command.equals("q") || command.equals("exit")) {
         command = "quit";
@@ -74,10 +75,18 @@ public class Warehouse {
     }
   }
 
+  private void listAllCommands() {
+    System.out.println();
+    for (String command : viewCommands.getListOfCommands()) {
+      System.out.print(" [" + command + "] ");
+    }
+    System.out.println();
+  }
+
   /**
    * Displays all non empty warehouse positions
    */
-  private void showAll() {
+  public void showAll() {
     Position[] nonEmpty = warehousePositions.getArrayOfNonEmptyPositions();
     for (Position p : nonEmpty) {
       System.out.println(p);
@@ -87,7 +96,7 @@ public class Warehouse {
   /**
    * Method for resizing the warehouse
    */
-  private void configWarehouse() {
+  public void configWarehouse() {
     try {
       int columns = Integer.valueOf(scanner.next());
       int rows = Integer.valueOf(scanner.next());
@@ -97,14 +106,14 @@ public class Warehouse {
     }
   }
 
-  private void quit() {
+  public void quit() {
     running = false;
   }
 
   /**
    * Method for the user input for adding an article.
    */
-  private void addArticle() {
+  public void addArticle() {
     String[] args = scanner.nextLine().split(" ");
 
     try {
@@ -173,7 +182,7 @@ public class Warehouse {
     return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
   }
 
-  private void removeArticle() {
+  public void removeArticle() {
     String name = scanner.next();
 
     List<Database2DConfig> positionList = warehousePositions.getPositions(name);
@@ -208,7 +217,7 @@ public class Warehouse {
           }
           return;
         } else {
-          if(amount == 0) {
+          if (amount == 0) {
             return;
           }
           amount -= temp.getNumOfArticles();
@@ -222,7 +231,7 @@ public class Warehouse {
   }
 
 
-  private void deleteArticle() {
+  public void deleteArticle() {
     String name = scanner.next();
 
     List<Database2DConfig> positionList = warehousePositions.getPositions(name);
@@ -258,7 +267,7 @@ public class Warehouse {
     }
   }
 
-  private void getPositions() {
+  public void getPositions() {
     String name = scanner.next();
 
     System.out.println("Positions for Article " + name + ":");
@@ -267,7 +276,7 @@ public class Warehouse {
     }
   }
 
-  private void showPositionById() {
+  public void showPositionById() {
     int column, row;
 
     try {
@@ -278,36 +287,6 @@ public class Warehouse {
       System.out.println(!p.isEmpty() ? p : "There's nothing here");
     } catch (NumberFormatException e) {
       System.out.println("Wrong kind of arguments. Integers expected");
-    }
-  }
-
-  class ControlCommandDatabase {
-    private HashMap<String, ControlCommand> commands;
-
-    ControlCommandDatabase() {
-      commands = initDatabase();
-
-    }
-
-    HashMap<String, ControlCommand> initDatabase() {
-      HashMap<String, ControlCommand> temp = new HashMap<>();
-      temp.put("inventory", Warehouse::showAll);
-      temp.put("config", Warehouse::configWarehouse);
-      temp.put("add", Warehouse::addArticle);
-      temp.put("position", Warehouse::getPositions);
-      temp.put("showposition", Warehouse::showPositionById);
-      temp.put("delete", Warehouse::deleteArticle);
-      temp.put("quit", Warehouse::quit);
-      temp.put("remove", Warehouse::removeArticle);
-
-      return temp;
-    }
-
-    void runCommand(String command, Warehouse warehouse) {
-      if (commands.get(command) == null) {
-        return;
-      }
-      commands.get(command).execute(warehouse);
     }
   }
 }

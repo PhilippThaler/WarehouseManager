@@ -1,7 +1,5 @@
 package com.philippthaler.app.ui;
 
-import com.philippthaler.app.database.ViewCommandDatabase;
-
 /**
  * Implementation of the View interface.
  */
@@ -10,15 +8,6 @@ public class UserInterface implements View {
   @Override
   public void start() {
     System.out.println("\n\nWhat would you like to do?");
-    showAllCommands();
-  }
-
-  private void showAllCommands() {
-    System.out.println();
-    for(String command: ViewCommandDatabase.getListOfCommands()) {
-      System.out.print(" ["+command+"] ");
-    }
-    System.out.println();
   }
 
   @Override

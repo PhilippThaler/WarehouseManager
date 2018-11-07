@@ -1,7 +1,7 @@
-package com.philippthaler.app.database;
+package com.philippthaler.app.commands.database;
 
-import com.philippthaler.app.ui.UserInterface;
-import com.philippthaler.app.commands.ViewCommand;
+import com.philippthaler.app.commands.Command;
+import com.philippthaler.app.commands.CommandDatabase;
 import com.philippthaler.app.ui.View;
 
 import java.util.*;
@@ -9,16 +9,17 @@ import java.util.*;
 /**
  * Simple command database, that holds many commands for the user interface
  */
-public class ViewCommandDatabase {
-  private static HashMap<String, ViewCommand> commands;
+public class ViewCommandDatabase implements CommandDatabase<View> {
+  private static HashMap<String, Command<View>> commands;
 
   public ViewCommandDatabase() {
-    commands = initDatabase();
+    commands = getDatabase();
 
   }
 
-  private HashMap<String, ViewCommand> initDatabase() {
-    HashMap<String, ViewCommand> temp = new HashMap<>();
+  @Override
+  public HashMap<String, Command<View>> getDatabase() {
+    HashMap<String, Command<View>> temp = new HashMap<>();
     temp.put("help", View::showHelp);
     temp.put("inventory", View::showAll);
     temp.put("config", View::config);
@@ -35,10 +36,12 @@ public class ViewCommandDatabase {
   /**
    * Method for running commands. Runs the help method, when the command can't be found.
    * Takes an instance of the ui class, on which it should be run.
+   *
    * @param command The command that should be run
-   * @param ui The ui instance.
+   * @param ui      The ui instance.
    */
-  public void runCommand(String command, UserInterface ui) {
+  @Override
+  public void runCommand(String command, View ui) {
     if (commands.get(command) == null) {
       commands.get("help").execute(ui);
       return;
@@ -49,7 +52,8 @@ public class ViewCommandDatabase {
   /**
    * @return An array of Strings for all the commands
    */
-  public static String[] getListOfCommands() {
+  @Override
+  public String[] getListOfCommands() {
     return commands.keySet().toArray(new String[0]);
   }
 }
