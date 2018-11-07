@@ -31,7 +31,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
    * Adds a new element to the array. It gets placed on the first free space it can find.
    * If the array isn't big enough, more space will be added.
    *
-   * @param position
+   * @param position The position which will get added.
    */
   @Override
   public void add(Position position) {
@@ -96,10 +96,7 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
   public boolean isIndexFull(int column, int row, String articleName) {
     if (positions[column][row].getArticle().getName().toLowerCase().equals(articleName.toLowerCase()) && !positions[column][row].isFull()) {
       return false;
-    } else if (isIndexEmpty(column, row)) {
-      return false;
-    }
-    return true;
+    } else return !isIndexEmpty(column, row);
   }
 
   @Override
@@ -225,15 +222,11 @@ public class Position2DDatabase implements GrowableArray2D<Position> {
 
     if (columns > size.getColumn() || rows > size.getRow()) {
       for (int i = 0; i < size.getColumn(); i++) {
-        for (int j = 0; j < size.getRow(); j++) {
-          temp[i][j] = positions[i][j];
-        }
+        if (size.getRow() >= 0) System.arraycopy(positions[i], 0, temp[i], 0, size.getRow());
       }
     } else if (columns < size.getColumn() || rows < size.getRow()) {
       for (int i = 0; i < columns; i++) {
-        for (int j = 0; j < rows; j++) {
-          temp[i][j] = positions[i][j];
-        }
+        if (rows >= 0) System.arraycopy(positions[i], 0, temp[i], 0, rows);
       }
     }
 

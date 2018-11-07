@@ -14,7 +14,7 @@ public class ViewCommandDatabase {
 
   }
 
-  public HashMap<String, ViewCommand> initDatabase() {
+  private HashMap<String, ViewCommand> initDatabase() {
     HashMap<String, ViewCommand> temp = new HashMap<>();
     temp.put("help", View::showHelp);
     temp.put("inventory", View::showAll);
@@ -37,8 +37,6 @@ public class ViewCommandDatabase {
   }
 
   public static String[] getListOfCommands() {
-    String[] commandStrings = commands.keySet().toArray(new String[0]);
-
-    return commandStrings;
+    return commands.keySet().toArray(new String[0]);
   }
 }

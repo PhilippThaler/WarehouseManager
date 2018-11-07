@@ -63,8 +63,6 @@ public class ArticleNormal implements Article {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("Article: " + name + ", Itemnumber: " + itemNumber + ", Price: " + price.getPrice());
-    return sb.toString();
+    return "Article: " + name + ", Itemnumber: " + itemNumber + ", Price: " + price.getPrice();
   }
 }

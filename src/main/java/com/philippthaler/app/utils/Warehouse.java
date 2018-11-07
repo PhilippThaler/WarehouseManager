@@ -30,14 +30,14 @@ public class Warehouse {
   private GrowableArray2D<Position> warehousePositions;
   private UserInterface userInterface;
 
-  private static final Warehouse instance = new Warehouse(App.COLUMN_INIT, App.ROW_INIT);
+  private static final Warehouse instance = new Warehouse();
 
-  private Warehouse(int columns, int rows) {
+  private Warehouse() {
     scanner = new Scanner(System.in);
     viewCommands = new ViewCommandDatabase();
     articleDatabase = ArticleDatabase.getInstance();
     controlCommands = new ControlCommandDatabase();
-    warehousePositions = new Position2DDatabase(columns, rows);
+    warehousePositions = new Position2DDatabase(App.COLUMN_INIT, App.ROW_INIT);
     userInterface = new UserInterface();
   }
 
@@ -56,14 +56,14 @@ public class Warehouse {
       if (command.equals("q") || command.equals("exit")) {
         command = "quit";
       }
+      scanner.nextLine();
       viewCommands.runCommand(command, userInterface);
       controlCommands.runCommand(command, this);
-      scanner.nextLine();
     }
   }
 
   private void initWarehouse() {
-    for (String key : articleDatabase.createArticleMap().keySet()) {
+    for (String key : articleDatabase.getArticles().keySet()) {
       addArticle(articleDatabase.getArticle(key), 1);
     }
   }
@@ -125,6 +125,7 @@ public class Warehouse {
       Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
       temp.setArticle(article);
       temp.setNumOfArticles(numOfArticles);
+      System.out.println(temp.getArticle().getName() + " added on position: " + temp.getArrayPosition());
     } catch (PositionFullException e) {
       Position temp = warehousePositions.get(warehousePositions.getNextFreePosition(article.getName()));
       // The amount of Articles that can still be saved into this position.
@@ -219,12 +220,12 @@ public class Warehouse {
   class ControlCommandDatabase {
     private HashMap<String, ControlCommand> commands;
 
-    public ControlCommandDatabase() {
+    ControlCommandDatabase() {
       commands = initDatabase();
 
     }
 
-    public HashMap<String, ControlCommand> initDatabase() {
+    HashMap<String, ControlCommand> initDatabase() {
       HashMap<String, ControlCommand> temp = new HashMap<>();
       temp.put("inventory", Warehouse::showAll);
       temp.put("config", Warehouse::configWarehouse);
@@ -237,17 +238,11 @@ public class Warehouse {
       return temp;
     }
 
-    public void runCommand(String command, Warehouse warehouse) {
+    void runCommand(String command, Warehouse warehouse) {
       if (commands.get(command) == null) {
         return;
       }
       commands.get(command).execute(warehouse);
-    }
-
-    public String[] getListOfCommands() {
-      String[] commandStrings = commands.keySet().toArray(new String[0]);
-
-      return commandStrings;
     }
   }
 }

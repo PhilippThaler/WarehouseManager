@@ -30,37 +30,34 @@ public class ArticleDatabase {
     return instance;
   }
 
-  public HashMap<String, ArticleNormal> createArticleMap() {
+  private HashMap<String, ArticleNormal> createArticleMap() {
     Map<String, ArticleNormal> temp = Map.of(
         "milch", new ArticleNormal("Milch", new Price(1), suppliers.get("grissemann"), packagingUnits.get("tetrapak")),
         "mehl", new ArticleNormal("Mehl", new Price(2), suppliers.get("grissemann"), packagingUnits.get("sack")),
         "cola", new ArticleNormal("Cola", new Price(3), suppliers.get("wedl"), packagingUnits.get("palette")),
         "rindfleisch", new ArticleNormal("Rindfleisch", new Price(20), suppliers.get("fleischhof"), packagingUnits.get("kg"))
     );
-    HashMap<String, ArticleNormal> map = new HashMap<>(temp);
-    return map;
+    return new HashMap<>(temp);
   }
 
-  public HashMap<String, PackagingUnit> createPackagingUnitMap() {
-    Map temp = Map.of(
+  private HashMap<String, PackagingUnit> createPackagingUnitMap() {
+    Map<String, PackagingUnit> temp = Map.of(
         "tetrapak", new PackagingUnit("Tetrapak"),
         "sack", new PackagingUnit("Sack"),
         "palette", new PackagingUnit("Palette"),
         "fass", new PackagingUnit("Fass"),
         "kg", new PackagingUnit("kg")
     );
-    HashMap<String, PackagingUnit> map = new HashMap<>(temp);
-    return map;
+    return new HashMap<>(temp);
   }
 
-  public HashMap<String, Supplier> createSupplierMap() {
-    Map temp = Map.of(
+  private HashMap<String, Supplier> createSupplierMap() {
+    Map<String, Supplier> temp = Map.of(
         "grissemann", new Supplier("Grissemann"),
         "wedl", new Supplier("C&C Wedl"),
         "fleischhof", new Supplier("Fleischhof Oberland")
     );
-    HashMap<String, Supplier> map = new HashMap<>(temp);
-    return map;
+    return new HashMap<>(temp);
   }
 
   public ArticleNormal getArticle(String key) {
@@ -73,6 +70,10 @@ public class ArticleDatabase {
 
   public Supplier getSupplier(String key) {
     return suppliers.get(key.toLowerCase());
+  }
+
+  public HashMap<String, ArticleNormal> getArticles() {
+    return articles;
   }
 
   public ArticleInfo getArticleInfo(String key) {
