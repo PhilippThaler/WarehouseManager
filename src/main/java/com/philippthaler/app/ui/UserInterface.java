@@ -7,7 +7,15 @@ public class UserInterface implements View {
   @Override
   public void start() {
     System.out.println("\n\nWhat would you like to do?");
-    showHelp();
+    showAllCommands();
+  }
+
+  private void showAllCommands() {
+    System.out.println();
+    for(String command: ViewCommandDatabase.getListOfCommands()) {
+      System.out.print(" ["+command+"] ");
+    }
+    System.out.println();
   }
 
   @Override
@@ -33,11 +41,15 @@ public class UserInterface implements View {
 
   @Override
   public void showHelp() {
-    System.out.println();
-    for(String command: ViewCommandDatabase.getListOfCommands()) {
-      System.out.print(" ["+command+"] ");
-    }
-    System.out.println();
+    System.out.println("[add] - Add an article to the warehouse");
+    System.out.println("[help] - Display this help menu");
+    System.out.println("[showposition] - Shows what article is in a specific position (row/column)");
+    System.out.println("[position] - Shows all warehouse positions of a specific article");
+    System.out.println("[inventory] - Display all items in the warehouse");
+    System.out.println("[config] - Warehouse configuration. Specify the size of the warehouse (rows/columns)");
+    System.out.println("[remove] - Remove a number of articles from the warehouse");
+    System.out.println("[delete] - Delete whole warehouse positions from the warehouse");
+    System.out.println("[quit] - Exit the application");
   }
 
   @Override
