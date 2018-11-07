@@ -22,7 +22,7 @@ public class UserInterface implements View {
   }
 
   @Override
-  public void remove() {
+  public void delete() {
     System.out.println("Enter the article name: ");
   }
 

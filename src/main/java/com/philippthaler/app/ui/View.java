@@ -10,4 +10,5 @@ public interface View {
   void showPositionById();
   void quit();
   void remove();
+  void delete();
 }

@@ -158,7 +158,7 @@ public class Warehouse {
     return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
   }
 
-  private void removeArticle() {
+  private void deleteArticle() {
     String name = scanner.next();
 
     List<Database2DConfig> positionList = warehousePositions.getPositions(name);
@@ -232,7 +232,7 @@ public class Warehouse {
       temp.put("add", Warehouse::addArticle);
       temp.put("position", Warehouse::getPositions);
       temp.put("showposition", Warehouse::showPositionById);
-      temp.put("remove", Warehouse::removeArticle);
+      temp.put("delete", Warehouse::deleteArticle);
       temp.put("quit", Warehouse::quit);
 
       return temp;
