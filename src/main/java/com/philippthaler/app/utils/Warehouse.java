@@ -116,13 +116,28 @@ public class Warehouse {
   public void addArticle() {
     String[] args = scanner.nextLine().split(" ");
 
+    String name = "";
+    int numOfArticles = 0;
+    Article article;
+
     try {
-      String name = args[0];
-      Price price = new Price(args[1]);
-      Supplier supplier = new Supplier(args[2]);
-      PackagingUnit packagingUnit = new PackagingUnit(args[3]);
-      int numOfArticles = args.length < 5 ? 1 : Integer.valueOf(args[4]);
-      Article article = new ArticleNormal(name, price, supplier, packagingUnit);
+      if (args.length == 5) {
+        name = args[0];
+        Price price = new Price(args[1]);
+        Supplier supplier = new Supplier(args[2]);
+        PackagingUnit packagingUnit = new PackagingUnit(args[3]);
+        numOfArticles = args.length < 5 ? 1 : Integer.valueOf(args[4]);
+        article = new ArticleNormal(name, price, supplier, packagingUnit);
+      } else if (args.length == 2 || args.length == 1) {
+        name = args[0];
+        numOfArticles = args.length < 2 ? 1 : Integer.valueOf(args[1]);
+      }
+
+
+      if (isArticleNameInDb(name)) {
+        addArticle(articleDatabase.getArticle(name), numOfArticles);
+        return;
+      }
 
       addArticle(article, numOfArticles);
     } catch (ArrayIndexOutOfBoundsException e) {
@@ -180,6 +195,10 @@ public class Warehouse {
    */
   private boolean isArticleInDb(Article article) {
     return articleDatabase.getArticle(article.getName().toLowerCase()) != null;
+  }
+
+  private boolean isArticleNameInDb(String articleName) {
+    return isArticleInDb(new ArticleNormal(articleName, null, null));
   }
 
   public void removeArticle() {
