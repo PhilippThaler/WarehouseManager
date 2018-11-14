@@ -1,10 +1,6 @@
 package com.philippthaler.app.database;
 
 public final class MariaDatabase implements Database {
-  @Override
-  public void drop() {
-
-  }
 
   @Override
   public void create() {
@@ -12,17 +8,17 @@ public final class MariaDatabase implements Database {
   }
 
   @Override
-  public void runScript() {
+  public void read() {
 
   }
 
   @Override
-  public void compare() {
+  public void update() {
 
   }
 
   @Override
-  public void disconnect() {
+  public void delete() {
 
   }
 }

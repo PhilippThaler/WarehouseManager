@@ -41,5 +41,4 @@ public class ControlCommandDatabase implements CommandDatabase<Warehouse> {
   public String[] getListOfCommands() {
     return commands.keySet().toArray(new String[0]);
   }
-
 }
