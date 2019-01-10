@@ -118,7 +118,7 @@ public class Warehouse {
 
     String name = "";
     int numOfArticles = 0;
-    Article article;
+    Article article = new ArticleNormal();
 
     try {
       if (args.length == 5) {
@@ -130,9 +130,9 @@ public class Warehouse {
         article = new ArticleNormal(name, price, supplier, packagingUnit);
       } else if (args.length == 2 || args.length == 1) {
         name = args[0];
+        article = new ArticleNormal(name);
         numOfArticles = args.length < 2 ? 1 : Integer.valueOf(args[1]);
       }
-
 
       if (isArticleNameInDb(name)) {
         addArticle(articleDatabase.getArticle(name), numOfArticles);
@@ -198,7 +198,7 @@ public class Warehouse {
   }
 
   private boolean isArticleNameInDb(String articleName) {
-    return isArticleInDb(new ArticleNormal(articleName, null, null));
+    return isArticleInDb(new ArticleNormal(articleName, null, null, null));
   }
 
   public void removeArticle() {

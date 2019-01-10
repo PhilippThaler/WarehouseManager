@@ -13,6 +13,8 @@ public interface Article {
   void setName(String name);
   void setItemNumber(String itemNumber);
   void setPrice(Price price);
+  void setSupplier(ArticleInfo supplier);
+  void setPackagingUnit(ArticleInfo packagingUnit);
 
   boolean equals(Object obj);
   String toString();

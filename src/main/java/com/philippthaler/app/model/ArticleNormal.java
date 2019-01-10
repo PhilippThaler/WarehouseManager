@@ -12,14 +12,23 @@ public class ArticleNormal implements Article {
   private String name;
   private String itemNumber;
   private Price price;
-  private HashMap<ArticleInfo, String> infos;
+  private ArticleInfo supplier;
+  private ArticleInfo packagingUnit;
 
+  public ArticleNormal() {
+    this("", new Price(-1), new Supplier(""), new PackagingUnit(""));
+  }
 
-  public ArticleNormal(String name, Price price, ArticleInfo... infos) {
+  public ArticleNormal(String name) {
+    this(name, new Price(-1), new Supplier(""), new PackagingUnit(""));
+  }
+
+  public ArticleNormal(String name, Price price, ArticleInfo supplier, ArticleInfo packagingUnit) {
     this.name = name;
     this.itemNumber = generateItemNumber(name);
     this.price = price;
-    this.infos = getInfoMapFromArray(infos);
+    this.supplier = supplier;
+    this.packagingUnit = packagingUnit;
   }
 
   public String getName() {
@@ -46,17 +55,12 @@ public class ArticleNormal implements Article {
     this.price = price;
   }
 
-  /**
-   * Getter Method that takes an Array of ArticleInfo and returns a Hashmap.
-   * @param infos The array
-   * @return HashMap
-   */
-  public HashMap<ArticleInfo, String> getInfoMapFromArray(ArticleInfo... infos) {
-    HashMap<ArticleInfo, String> infoMap = new HashMap<>();
-    for (ArticleInfo info : infos) {
-      infoMap.put(info, info.getName());
-    }
-    return infoMap;
+  public void setSupplier(ArticleInfo supplier) {
+    this.supplier = supplier;
+  }
+
+  public void setPackagingUnit(ArticleInfo packagingUnit) {
+    this.packagingUnit = packagingUnit;
   }
 
   private String generateItemNumber(String articleName) {
@@ -66,6 +70,7 @@ public class ArticleNormal implements Article {
 
   /**
    * Implementation of the equals method
+   *
    * @param obj An object
    * @return Returns true, if every field of an ArticleInfo is equals to every field of another one.
    */
