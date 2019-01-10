@@ -112,28 +112,45 @@ public class Warehouse {
 
   /**
    * Method for the user input for adding an article.
+   * You can enter all arguments, or just the name of the article, or the name and the number you'd like to add.
+   * If you don't enter all arguments and the article isn't in the database yet, it asks for those arguments.
    */
   public void addArticle() {
     String[] args = scanner.nextLine().split(" ");
 
     String name = "";
+    Price price;
+    ArticleInfo supplier;
+    ArticleInfo packagingUnit;
     int numOfArticles = 0;
     Article article = new ArticleNormal();
 
     try {
       if (args.length == 5) {
+        // If all arguments are entered
         name = args[0];
-        Price price = new Price(args[1]);
-        Supplier supplier = new Supplier(args[2]);
-        PackagingUnit packagingUnit = new PackagingUnit(args[3]);
+        price = new Price(args[1]);
+        supplier = new Supplier(args[2]);
+        packagingUnit = new PackagingUnit(args[3]);
         numOfArticles = args.length < 5 ? 1 : Integer.valueOf(args[4]);
         article = new ArticleNormal(name, price, supplier, packagingUnit);
       } else if (args.length == 2 || args.length == 1) {
+        // If the name is entered, or the name and the number of Articles
         name = args[0];
-        article = new ArticleNormal(name);
         numOfArticles = args.length < 2 ? 1 : Integer.valueOf(args[1]);
+        if(!isArticleNameInDb(name)) {
+          // If the article isn't in the database yet, ask the user for the other arguments.
+          System.out.println("Item not found. Enter the Article Information, seperated by whitespace");
+          System.out.println("[Price] [Supplier] [Packaging Unit]");
+          args = scanner.nextLine().split(" ");
+          price = new Price(args[0]);
+          supplier = new Supplier(args[1]);
+          packagingUnit = new PackagingUnit(args[2]);
+          article = new ArticleNormal(name, price, supplier, packagingUnit);
+        }
       }
 
+      // If the article is already in the database, use the article from the database and add to it.
       if (isArticleNameInDb(name)) {
         addArticle(articleDatabase.getArticle(name), numOfArticles);
         return;

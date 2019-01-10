@@ -43,6 +43,14 @@ public class ArticleNormal implements Article {
     return price;
   }
 
+  public ArticleInfo getSupplier() {
+    return supplier;
+  }
+
+  public ArticleInfo getPackagingUnit() {
+    return packagingUnit;
+  }
+
   public void setName(String name) {
     this.name = name;
   }
